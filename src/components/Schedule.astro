@@ -147,7 +147,7 @@ const timeLabel = (s: Slot) => `${s.start}–${s.end}`
   .sched__days { display: grid; gap: 2.5rem; }
   @media (min-width: 1000px) { .sched__days { grid-template-columns: repeat(2, 1fr); gap: 2.5rem 2rem; } }
 
-  .day__name { font-size: var(--step-2); color: var(--hot); margin-bottom: 0.8rem; }
+  .day__name { font-size: var(--step-2); color: var(--accent); margin-bottom: 0.8rem; }
   .day__list { list-style: none; padding: 0; margin: 0; display: grid; gap: 2px; }
   .day__empty { font-size: var(--step--1); color: var(--fg-muted); font-style: italic; padding: 0.8rem 0; }
 
@@ -157,7 +157,7 @@ const timeLabel = (s: Slot) => `${s.start}–${s.end}`
     border-left: 3px solid transparent;
     transition: background 0.15s, border-color 0.15s;
   }
-  .slot:hover { background: var(--ink-3); border-left-color: var(--hot); }
+  .slot:hover { background: var(--ink-3); border-left-color: var(--accent); }
   .slot[hidden] { display: none; }
 
   .slot__time { font-variant-numeric: tabular-nums; font-weight: 700; font-size: var(--step--1); padding-top: 0.15em; }
@@ -166,8 +166,8 @@ const timeLabel = (s: Slot) => `${s.start}–${s.end}`
   .slot__meta { font-size: var(--step--1); }
   .slot__tags { margin-top: 0.2rem; }
 
-  .tag--sel { color: var(--electric); }
-  .tag--note { color: var(--amber); }
+  .tag--sel { color: var(--accent); }
+  .tag--note { color: var(--fg); }
 
   @media (max-width: 420px) {
     .slot { grid-template-columns: 1fr; gap: 0.3rem; }

@@ -1,4 +1,7 @@
 ---
+import { Image } from 'astro:assets'
+import wortmarke from '../assets/brand/wortmarke-weiss.webp'
+import signet from '../assets/brand/signet.webp'
 import { nav, site } from '../data/site'
 const path = Astro.url.pathname
 const isActive = (href: string) => path === href || (href !== '/' && path.startsWith(href))
@@ -7,10 +10,17 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
 <header class="hdr">
   <div class="wrap hdr__inner">
     <a href="/" class="logo" aria-label={`${site.name} — Startseite`}>
-      <span class="logo__mark display">AS</span>
+      <Image src={signet} alt="" width={38} height={38} class="logo__signet" loading="eager" />
       <span class="logo__text">
-        <span class="display logo__name">Ars Saltandi</span>
-        <span class="logo__sub">Hildesheim</span>
+        <Image
+          src={wortmarke}
+          alt={site.name}
+          width={200}
+          height={30}
+          class="logo__wordmark"
+          loading="eager"
+        />
+        <span class="logo__sub">Tanz- &amp; Artistikschule Hildesheim</span>
       </span>
     </a>
 
@@ -45,15 +55,17 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
   }
   .hdr__inner { display: flex; align-items: center; gap: 1rem; padding-block: 0.8rem; }
 
-  .logo { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; margin-right: auto; }
-  .logo__mark {
-    display: grid; place-items: center;
-    width: 2.4rem; height: 2.4rem; border-radius: 8px;
-    background: var(--hot); color: #fff; font-size: 1.35rem; padding-top: 0.12em;
+  .logo { display: flex; align-items: center; gap: 0.7rem; text-decoration: none; margin-right: auto; }
+  /* Das Signet ist eine schwarze Pinselscheibe — auf dunklem Grund invertiert
+     dargestellt, damit die Tänzerfigur schwarz auf hellem Kreis steht. */
+  .logo__signet { width: 2.1rem; height: 2.1rem; filter: invert(1); flex: none; }
+  .logo__text { display: flex; flex-direction: column; gap: 0.25rem; line-height: 1; }
+  .logo__wordmark { width: clamp(120px, 18vw, 170px); height: auto; }
+  .logo__sub {
+    font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--fg-muted); white-space: nowrap;
   }
-  .logo__text { display: flex; flex-direction: column; line-height: 1; }
-  .logo__name { font-size: 1.35rem; letter-spacing: 0.04em; }
-  .logo__sub { font-size: 0.62rem; letter-spacing: 0.26em; text-transform: uppercase; color: var(--fg-muted); }
+  @media (max-width: 560px) { .logo__sub { display: none; } }
 
   .nav__inner { display: flex; align-items: center; gap: clamp(0.8rem, 2vw, 1.6rem); }
   .nav__list { display: flex; gap: clamp(0.7rem, 1.8vw, 1.5rem); list-style: none; padding: 0; margin: 0; }
@@ -63,7 +75,7 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
     transition: color 0.15s;
   }
   .nav__list a:hover, .nav__list a[aria-current='page'] { color: var(--fg); }
-  .nav__list a[aria-current='page'] { text-decoration: underline; text-decoration-color: var(--hot); text-decoration-thickness: 2px; }
+  .nav__list a[aria-current='page'] { text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; }
 
   .btn--sm { padding: 0.6em 1.1em; font-size: 0.72rem; }
 
@@ -96,6 +108,6 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
     .navtoggle:checked ~ .burger span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
     .navtoggle:checked ~ .burger span:nth-child(2) { opacity: 0; }
     .navtoggle:checked ~ .burger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-    .navtoggle:focus-visible ~ .burger { outline: 3px solid var(--electric); outline-offset: 3px; }
+    .navtoggle:focus-visible ~ .burger { outline: 3px solid var(--accent); outline-offset: 3px; }
   }
 </style>

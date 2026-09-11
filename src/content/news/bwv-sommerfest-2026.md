@@ -2,6 +2,7 @@
 title: BWV Sommerfest 2026
 date: 2026-08-19
 kind: auftritt
+image: junior-company
 summary: Junior Company, Acro Junior Company und Vorstufe JC mit Tanz, Akrobatik und Walk Acts.
 ---
 

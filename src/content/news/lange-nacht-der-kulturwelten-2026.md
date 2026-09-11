@@ -2,6 +2,7 @@
 title: Lange Nacht der Kulturwelten
 date: 2026-04-28
 kind: auftritt
+image: vertikaltuch-hoch
 summary: „Beyond Gravity“ — dreimal vor ausverkauftem Haus, mit Tanz, Akrobatik, Rhönrad, Luftartistik und Cyr Wheel.
 ---
 

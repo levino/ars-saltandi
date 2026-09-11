@@ -2,6 +2,8 @@
 title: Pflasterzauber 2026
 date: 2026-09-07
 kind: auftritt
+image: buehne-traces
+credit: Walter Hapke
 summary: Mit „Offbeat“ an der Lilie — Tanz, Akrobatik und Live-Schlagzeug beim Hildesheimer Straßen-Zirkus-Festival.
 ---
 

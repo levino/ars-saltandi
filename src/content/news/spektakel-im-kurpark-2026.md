@@ -2,6 +2,8 @@
 title: Spektakel im Kurpark
 date: 2026-08-19
 kind: auftritt
+image: buehne-uebermut
+credit: Walter Hapke
 summary: Von Stepptanz und Spitzentanz bis Luftartistik, Cyr Wheel und Walk Acts — unsere Leistungsgruppen im Kurpark.
 ---
 

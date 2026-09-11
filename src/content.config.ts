@@ -53,6 +53,10 @@ const news = defineCollection({
     date: z.coerce.date(),
     summary: z.string(),
     kind: z.enum(['news', 'erfolg', 'auftritt', 'kurs']).default('news'),
+    /** Dateiname in src/assets/photos ohne Endung, z. B. "buehne-traces" */
+    image: z.string().optional(),
+    /** Fotograf:in, erscheint als Bildnachweis */
+    credit: z.string().optional(),
     draft: z.boolean().default(false),
   }),
 })
