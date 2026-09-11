@@ -42,10 +42,9 @@ import { site, locations } from '../data/site'
 
       <h2>Schriftarten</h2>
       <p>
-        Für Überschriften laden wir eine Schriftart von Google Fonts. Dabei wird Ihre IP-Adresse
-        an Google übertragen. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO.
-        <em>(Hinweis für die Umsetzung: Die Schrift lässt sich selbst hosten, dann entfällt
-        diese Übermittlung vollständig.)</em>
+        Die verwendete Schriftart wird von unserem eigenen Server ausgeliefert. Es werden
+        <strong>keine</strong> Schriften von Google Fonts oder anderen Drittanbietern geladen,
+        es findet also auch keine Übermittlung Ihrer IP-Adresse an Dritte statt.
       </p>
 
       <h2>Formulare</h2>
@@ -92,8 +91,8 @@ import { site, locations } from '../data/site'
   .prose h2 { color: var(--fg); font-size: var(--step-1); }
   .prose strong { color: var(--fg); }
   .todo {
-    padding: 1.1rem 1.3rem; border: 1px dashed var(--amber); border-radius: 10px;
-    color: var(--amber); font-size: var(--step--1);
+    padding: 1.1rem 1.3rem; border: 1px dashed var(--fg); border-radius: 10px;
+    color: var(--fg); font-size: var(--step--1);
   }
-  .todo strong { display: block; margin-bottom: 0.3rem; color: var(--amber); }
+  .todo strong { display: block; margin-bottom: 0.3rem; color: var(--fg); }
 </style>

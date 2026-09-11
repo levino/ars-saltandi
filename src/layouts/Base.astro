@@ -29,13 +29,15 @@ const canonical = new URL(Astro.url.pathname, Astro.site)
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="de_DE" />
     <meta property="og:site_name" content={site.name} />
-    <meta name="theme-color" content="#0a0a12" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <meta name="theme-color" content="#241f21" />
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <link rel="stylesheet" href="/fonts/oswald.css" />
     <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap"
+      rel="preload"
+      href="/fonts/oswald-latin-600.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
     />
   </head>
   <body>
@@ -52,7 +54,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site)
         top: 0;
         translate: -50% -120%;
         z-index: 100;
-        background: var(--hot);
+        background: var(--accent);
         color: #fff;
         padding: 0.7em 1.2em;
         border-radius: 0 0 8px 8px;

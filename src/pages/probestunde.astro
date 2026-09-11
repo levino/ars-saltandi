@@ -118,10 +118,10 @@ const courses = (await getCollection('courses', (c) => !c.data.draft)).sort(
 
   .side { display: grid; gap: 1.2rem; }
   .panel { padding: 1.5rem; background: var(--ink-2); border: 1px solid var(--line); border-radius: var(--radius); }
-  .panel__h { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--hot); margin-bottom: 1rem; }
+  .panel__h { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
   .panel p { font-size: var(--step--1); }
-  .panel a:not(.big-link) { color: var(--hot); }
+  .panel a:not(.big-link) { color: var(--accent); }
   .big-link { font-size: var(--step-1); font-weight: 700; text-decoration: none; }
-  .big-link:hover { color: var(--hot); }
+  .big-link:hover { color: var(--accent); }
   .list { margin: 0; padding-left: 1.2rem; display: grid; gap: 0.5rem; font-size: var(--step--1); color: var(--fg-muted); }
 </style>

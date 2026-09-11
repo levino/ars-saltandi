@@ -1,6 +1,10 @@
 ---
 import Base from '../layouts/Base.astro'
+import { Image } from 'astro:assets'
+import signet from '../assets/brand/signet.webp'
 import { getCollection } from 'astro:content'
+import { coursePhoto, photo } from '../lib/photos'
+import heroImage from '../assets/photos/hero-partnerakrobatik.webp'
 import { getSlots, teacherNames } from '../lib/schedule'
 import { locations, site } from '../data/site'
 
@@ -23,7 +27,15 @@ const fmt = new Intl.DateTimeFormat('de-DE', { day: '2-digit', month: 'long', ye
 
 <Base bleed>
   <section class="hero">
-    <div class="hero__glow" aria-hidden="true"></div>
+    <Image
+      src={heroImage}
+      alt="Zwei Artistinnen in einer Partnerakrobatik-Figur auf der Bühne"
+      class="hero__img"
+      widths={[800, 1400, 2000]}
+      sizes="(min-width: 1100px) 46vw, 100vw"
+      loading="eager"
+      fetchpriority="high"
+    />
     <div class="wrap hero__inner">
       <p class="eyebrow">Tanz- & Artistikschule Hildesheim</p>
       <h1 class="display hero__title">
@@ -74,24 +86,62 @@ const fmt = new Intl.DateTimeFormat('de-DE', { day: '2-digit', month: 'long', ye
 
       <h3 class="disc-head"><span class="disc-dot disc-dot--tanz"></span>Tanz</h3>
       <div class="grid grid--3">
-        {tanz.map((c) => (
-          <a class="card course" href={`/kurse/${c.id}/`}>
-            <h4 class="display course__title">{c.data.title}</h4>
-            <p class="course__ages text-muted">{c.data.ages}</p>
-            <p class="course__sum">{c.data.summary}</p>
-          </a>
-        ))}
+        {tanz.map((c) => {
+          const img = coursePhoto(c.id)
+          return (
+            <a class="card course" href={`/kurse/${c.id}/`}>
+              {img ? (
+                <Image
+                  src={img}
+                  alt=""
+                  class="course__img"
+                  widths={[300, 600]}
+                  sizes="(min-width: 900px) 320px, 100vw"
+                  loading="lazy"
+                />
+              ) : (
+                <span class="course__img course__img--none" aria-hidden="true">
+                    <Image src={signet} alt="" width={72} height={72} />
+                  </span>
+              )}
+              <div class="course__body">
+                <h4 class="display course__title">{c.data.title}</h4>
+                <p class="course__ages text-muted">{c.data.ages}</p>
+                <p class="course__sum">{c.data.summary}</p>
+              </div>
+            </a>
+          )
+        })}
       </div>
 
       <h3 class="disc-head"><span class="disc-dot disc-dot--art"></span>Artistik &amp; Moving Arts</h3>
       <div class="grid grid--3">
-        {artistik.map((c) => (
-          <a class="card course" href={`/kurse/${c.id}/`}>
-            <h4 class="display course__title">{c.data.title}</h4>
-            <p class="course__ages text-muted">{c.data.ages}</p>
-            <p class="course__sum">{c.data.summary}</p>
-          </a>
-        ))}
+        {artistik.map((c) => {
+          const img = coursePhoto(c.id)
+          return (
+            <a class="card course" href={`/kurse/${c.id}/`}>
+              {img ? (
+                <Image
+                  src={img}
+                  alt=""
+                  class="course__img"
+                  widths={[300, 600]}
+                  sizes="(min-width: 900px) 320px, 100vw"
+                  loading="lazy"
+                />
+              ) : (
+                <span class="course__img course__img--none" aria-hidden="true">
+                    <Image src={signet} alt="" width={72} height={72} />
+                  </span>
+              )}
+              <div class="course__body">
+                <h4 class="display course__title">{c.data.title}</h4>
+                <p class="course__ages text-muted">{c.data.ages}</p>
+                <p class="course__sum">{c.data.summary}</p>
+              </div>
+            </a>
+          )
+        })}
       </div>
     </div>
   </section>
@@ -155,17 +205,25 @@ const fmt = new Intl.DateTimeFormat('de-DE', { day: '2-digit', month: 'long', ye
 </Base>
 
 <style>
-  .hero { position: relative; padding-block: clamp(3.5rem, 11vw, 9rem) clamp(3rem, 8vw, 6rem); overflow: hidden; }
-  .hero__glow {
-    position: absolute; inset: -30% 0 auto 0; height: 90%;
-    background:
-      radial-gradient(50% 60% at 20% 30%, color-mix(in oklab, var(--hot) 30%, transparent), transparent 70%),
-      radial-gradient(45% 55% at 80% 20%, color-mix(in oklab, var(--electric) 18%, transparent), transparent 70%);
-    filter: blur(30px); pointer-events: none;
+  .hero { position: relative; padding-block: clamp(3rem, 9vw, 7rem) clamp(3rem, 8vw, 6rem); overflow: hidden; }
+  .hero__img {
+    position: absolute; inset: 0 0 0 auto;
+    width: 52%; height: 100%; object-fit: cover; object-position: 50% 30%;
+    /* Bild nach links ausblenden, damit die Schrift frei steht */
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 42%);
+    mask-image: linear-gradient(to right, transparent, #000 42%);
   }
   .hero__inner { position: relative; }
+  @media (max-width: 860px) {
+    .hero__img {
+      position: relative; width: 100%; height: min(48vh, 340px);
+      margin-bottom: 2rem; -webkit-mask-image: none; mask-image: none;
+    }
+    .hero { padding-top: 0; }
+    .hero__inner { padding-top: 0; }
+  }
   .hero__title { font-size: var(--step-5); margin-block: 0.6rem 1.4rem; }
-  .hero__accent { color: var(--hot); }
+  .hero__accent { color: var(--accent); }
   .hero__lead { font-size: var(--step-1); max-width: 46ch; color: var(--fg-muted); }
   .hero__cta { margin-top: 2rem; }
 
@@ -181,7 +239,7 @@ const fmt = new Intl.DateTimeFormat('de-DE', { day: '2-digit', month: 'long', ye
   .sec-lead { max-width: 52ch; margin-bottom: 2.5rem; }
 
   .loc { padding: 1.8rem; border: 1px solid var(--line-light); border-radius: var(--radius); background: #fff; }
-  .loc__name { font-size: var(--step-2); color: color-mix(in oklab, var(--hot) 85%, black); }
+  .loc__name { font-size: var(--step-2); color: color-mix(in oklab, var(--accent) 85%, black); }
   .loc__addr { font-weight: 600; margin-block: 0.4rem 0.8rem; }
 
   .disc-head {
@@ -190,10 +248,17 @@ const fmt = new Intl.DateTimeFormat('de-DE', { day: '2-digit', month: 'long', ye
   }
   .disc-head:first-of-type { margin-top: 0; }
   .disc-dot { width: 0.7rem; height: 0.7rem; border-radius: 50%; }
-  .disc-dot--tanz { background: var(--hot); }
-  .disc-dot--art { background: var(--amber); }
+  .disc-dot--tanz { background: var(--accent); }
+  .disc-dot--art { background: var(--fg); }
 
-  .course { padding: 1.5rem; text-decoration: none; }
+  .course { text-decoration: none; overflow: hidden; }
+  .course__img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+  .course__img--none {
+    display: grid; place-items: center;
+    background: repeating-linear-gradient(135deg, var(--ink-2) 0 14px, var(--ink-3) 14px 28px);
+  }
+  .course__img--none img { width: 3.2rem; height: 3.2rem; filter: invert(1); opacity: 0.35; }
+  .course__body { padding: 1.3rem; }
   .course__title { font-size: var(--step-1); }
   .course__ages { font-size: var(--step--1); margin-block: 0.3rem 0.7rem; }
   .course__sum { font-size: var(--step--1); color: var(--fg-muted); }
@@ -206,7 +271,7 @@ const fmt = new Intl.DateTimeFormat('de-DE', { day: '2-digit', month: 'long', ye
     padding: 1rem 1.2rem; background: #fff; border: 1px solid var(--line-light); border-radius: 10px;
   }
   .free__list strong { flex: 1 1 auto; }
-  .tag--new { color: color-mix(in oklab, var(--hot) 85%, black); }
+  .tag--new { color: color-mix(in oklab, var(--accent) 85%, black); }
 
   .news-head { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; align-items: end; margin-bottom: 2.5rem; }
   .post { padding: 1.5rem; text-decoration: none; }

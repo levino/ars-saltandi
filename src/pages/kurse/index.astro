@@ -1,6 +1,9 @@
 ---
 import Base from '../../layouts/Base.astro'
+import { Image } from 'astro:assets'
+import signet from '../../assets/brand/signet.webp'
 import { getCollection } from 'astro:content'
+import { coursePhoto } from '../../lib/photos'
 import { getSlots, slotsForTitles } from '../../lib/schedule'
 
 const courses = (await getCollection('courses', (c) => !c.data.draft)).sort(
@@ -39,12 +42,29 @@ const groups = [
         <div class="grid grid--3">
           {courses.filter((c) => c.data.discipline === g.key).map((c) => {
             const n = countFor(c.data.scheduleTitles)
+            const img = coursePhoto(c.id)
             return (
               <a class="card course" href={`/kurse/${c.id}/`}>
-                <h3 class="display course__title">{c.data.title}</h3>
-                <p class="course__ages">{c.data.ages}</p>
-                <p class="course__sum text-muted">{c.data.summary}</p>
-                {n > 0 && <p class="course__n">{n} {n === 1 ? 'Termin' : 'Termine'} pro Woche</p>}
+              {img ? (
+                  <Image
+                    src={img}
+                    alt=""
+                    class="course__img"
+                    widths={[320, 640]}
+                    sizes="(min-width: 900px) 320px, 100vw"
+                    loading="lazy"
+                  />
+                ) : (
+                  <span class="course__img course__img--none" aria-hidden="true">
+                    <Image src={signet} alt="" width={72} height={72} />
+                  </span>
+                )}
+                <div class="course__body">
+                  <h3 class="display course__title">{c.data.title}</h3>
+                  <p class="course__ages">{c.data.ages}</p>
+                  <p class="course__sum text-muted">{c.data.summary}</p>
+                  {n > 0 && <p class="course__n">{n} {n === 1 ? 'Termin' : 'Termine'} pro Woche</p>}
+                </div>
               </a>
             )
           })}
@@ -58,16 +78,23 @@ const groups = [
   .page-head { margin-bottom: 3rem; }
   .page-title { font-size: var(--step-4); margin-block: 0.4rem 1rem; }
   .page-lead { font-size: var(--step-1); max-width: 56ch; }
-  .page-lead a { color: var(--hot); }
+  .page-lead a { color: var(--accent); }
 
   .disc + .disc { margin-top: clamp(3rem, 7vw, 5rem); }
   .disc__head { margin-bottom: 1.8rem; }
-  .disc__title { font-size: var(--step-2); color: var(--hot); }
+  .disc__title { font-size: var(--step-2); color: var(--accent); }
   .disc__hint { font-size: var(--step--1); margin-top: 0.3rem; }
 
-  .course { padding: 1.6rem; text-decoration: none; }
+  .course { text-decoration: none; overflow: hidden; }
+  .course__img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+  .course__img--none {
+    display: grid; place-items: center;
+    background: repeating-linear-gradient(135deg, var(--ink-2) 0 14px, var(--ink-3) 14px 28px);
+  }
+  .course__img--none img { width: 3.2rem; height: 3.2rem; filter: invert(1); opacity: 0.35; }
+  .course__body { padding: 1.4rem; display: flex; flex-direction: column; flex: 1; }
   .course__title { font-size: var(--step-1); }
-  .course__ages { font-size: var(--step--1); font-weight: 600; margin-block: 0.35rem 0.7rem; color: var(--amber); }
+  .course__ages { font-size: var(--step--1); font-weight: 600; margin-block: 0.35rem 0.7rem; color: var(--fg); }
   .course__sum { font-size: var(--step--1); flex: 1; }
   .course__n {
     margin-top: 1rem; padding-top: 0.8rem; border-top: 1px solid var(--line);

@@ -2,6 +2,7 @@
 title: ARS SALTANDI ist Verein des Jahres
 date: 2026-02-09
 kind: erfolg
+image: company-black
 summary: Danke an alle, die abgestimmt haben — wir sind Verein des Jahres!
 ---
 

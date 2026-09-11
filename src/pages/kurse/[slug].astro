@@ -1,7 +1,9 @@
 ---
 import type { GetStaticPaths } from 'astro'
 import Base from '../../layouts/Base.astro'
+import { Image } from 'astro:assets'
 import { getCollection, render } from 'astro:content'
+import { coursePhoto } from '../../lib/photos'
 import { getSlots, slotsForTitles, teacherNames, LEVEL_LABELS } from '../../lib/schedule'
 import { locations } from '../../data/site'
 
@@ -21,6 +23,7 @@ const allTeachers = await getCollection('teachers', (t) => !t.data.draft)
 const teachers = allTeachers.filter((t) => names.some((n) => n.includes(t.data.scheduleName)))
 
 const location = locations.find((l) => l.id === course.data.location)!
+const image = coursePhoto(course.id)
 const openSlots = courseSlots.filter((s) => !s.selectionOnly && !s.internal)
 ---
 
@@ -32,6 +35,16 @@ const openSlots = courseSlots.filter((s) => !s.selectionOnly && !s.internal)
       <p class="eyebrow">{course.data.discipline === 'tanz' ? 'Tanz' : 'Artistik'}</p>
       <h1 class="display page-title">{course.data.title}</h1>
       <p class="page-lead">{course.data.summary}</p>
+      {image && (
+        <Image
+          src={image}
+          alt={`${course.data.title} bei ARS SALTANDI`}
+          class="page-img"
+          widths={[600, 1000, 1600]}
+          sizes="(min-width: 1100px) 1100px, 100vw"
+          loading="eager"
+        />
+      )}
       <dl class="facts">
         <div><dt>Alter</dt><dd>{course.data.ages}</dd></div>
         <div><dt>Ort</dt><dd>{location.name}<br /><span class="text-muted">{location.street}, {location.city}</span></dd></div>
@@ -98,12 +111,16 @@ const openSlots = courseSlots.filter((s) => !s.selectionOnly && !s.internal)
 
 <style>
   .crumbs { font-size: var(--step--1); margin-bottom: 1.5rem; }
-  .crumbs a { color: var(--hot); }
+  .crumbs a { color: var(--accent); }
 
   .page-head { margin-bottom: 3rem; }
   .page-title { font-size: var(--step-4); margin-block: 0.4rem 1rem; }
   .page-lead { font-size: var(--step-1); max-width: 56ch; color: var(--fg-muted); }
 
+  .page-img {
+    width: 100%; aspect-ratio: 16 / 9; object-fit: cover;
+    border-radius: var(--radius); margin-top: 2rem;
+  }
   .facts {
     display: flex; flex-wrap: wrap; gap: 2rem;
     margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--line);
@@ -118,10 +135,10 @@ const openSlots = courseSlots.filter((s) => !s.selectionOnly && !s.internal)
   @media (max-width: 899px) { .side { position: static; } }
 
   .panel { padding: 1.5rem; background: var(--ink-2); border: 1px solid var(--line); border-radius: var(--radius); }
-  .panel--cta { background: linear-gradient(160deg, color-mix(in oklab, var(--hot) 18%, var(--ink-2)), var(--ink-2)); }
+  .panel--cta { background: linear-gradient(160deg, color-mix(in oklab, var(--accent) 18%, var(--ink-2)), var(--ink-2)); }
   .panel--cta .btn { margin-top: 1rem; }
-  .panel__h { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--hot); margin-bottom: 1rem; }
-  .panel__link { display: inline-block; margin-top: 1.1rem; font-size: var(--step--1); color: var(--hot); text-decoration: none; }
+  .panel__h { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+  .panel__link { display: inline-block; margin-top: 1.1rem; font-size: var(--step--1); color: var(--accent); text-decoration: none; }
   .panel__link:hover { text-decoration: underline; }
 
   .times { list-style: none; padding: 0; margin: 0; display: grid; gap: 1rem; }
@@ -134,5 +151,5 @@ const openSlots = courseSlots.filter((s) => !s.selectionOnly && !s.internal)
   .people { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.8rem; }
   .people li { display: grid; gap: 0.15rem; font-size: var(--step--1); }
   .people a { color: var(--fg); font-weight: 600; text-decoration: none; }
-  .people a:hover { color: var(--hot); }
+  .people a:hover { color: var(--accent); }
 </style>

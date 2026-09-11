@@ -1,7 +1,9 @@
 ---
 import type { GetStaticPaths } from 'astro'
 import Base from '../../layouts/Base.astro'
+import { Image } from 'astro:assets'
 import { getCollection, render } from 'astro:content'
+import { photo } from '../../lib/photos'
 
 export const getStaticPaths = (async () => {
   const posts = await getCollection('news', (n) => !n.data.draft)
@@ -11,6 +13,7 @@ export const getStaticPaths = (async () => {
 const { post } = Astro.props
 const { Content } = await render(post)
 const fmt = new Intl.DateTimeFormat('de-DE', { day: '2-digit', month: 'long', year: 'numeric' })
+const image = post.data.image ? photo(post.data.image) : undefined
 ---
 
 <Base title={post.data.title} description={post.data.summary}>
@@ -21,6 +24,18 @@ const fmt = new Intl.DateTimeFormat('de-DE', { day: '2-digit', month: 'long', ye
       <h1 class="display title">{post.data.title}</h1>
       <p class="lead text-muted">{post.data.summary}</p>
     </header>
+    {image && (
+      <figure class="hero-fig">
+        <Image
+          src={image}
+          alt={post.data.title}
+          widths={[700, 1200]}
+          sizes="(min-width: 800px) 760px, 100vw"
+          loading="eager"
+        />
+        {post.data.credit && <figcaption>Foto: {post.data.credit}</figcaption>}
+      </figure>
+    )}
     <article class="prose"><Content /></article>
     <a href="/news/" class="btn btn--ghost back">← Alle News</a>
   </div>
@@ -28,9 +43,14 @@ const fmt = new Intl.DateTimeFormat('de-DE', { day: '2-digit', month: 'long', ye
 
 <style>
   .crumbs { font-size: var(--step--1); margin-bottom: 1.5rem; }
-  .crumbs a { color: var(--hot); }
+  .crumbs a { color: var(--accent); }
   .head { margin-bottom: 2.5rem; }
   .title { font-size: var(--step-3); margin-block: 0.5rem 1rem; }
   .lead { font-size: var(--step-1); }
+  .hero-fig { margin: 0 0 2.5rem; }
+  .hero-fig img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: var(--radius); }
+  .hero-fig figcaption {
+    margin-top: 0.6rem; font-size: var(--step--1); color: var(--fg-muted);
+  }
   .back { margin-block: 3rem 5rem; }
 </style>

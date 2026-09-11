@@ -94,15 +94,15 @@ const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT || '/api/form'
     border: 1px solid var(--line); border-radius: 8px; width: 100%;
   }
   .frm :global(.field textarea) { min-height: 8rem; resize: vertical; }
-  .frm :global(.field input:required:invalid:not(:placeholder-shown)) { border-color: var(--hot); }
+  .frm :global(.field input:required:invalid:not(:placeholder-shown)) { border-color: var(--accent); }
   .frm :global(.row) { display: grid; gap: 1.2rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); }
 
   .frm__foot { display: grid; gap: 1.2rem; margin-top: 0.5rem; }
   .frm__check { display: flex; gap: 0.7rem; align-items: start; font-size: var(--step--1); color: var(--fg-muted); }
-  .frm__check input { margin-top: 0.25em; flex: none; width: 1.1rem; height: 1.1rem; accent-color: var(--hot); }
-  .frm__check a { color: var(--hot); }
+  .frm__check input { margin-top: 0.25em; flex: none; width: 1.1rem; height: 1.1rem; accent-color: var(--accent); }
+  .frm__check a { color: var(--accent); }
   .frm__foot .btn { justify-self: start; }
   .frm__status { font-size: var(--step--1); padding: 0.9rem 1.1rem; border-radius: 8px; }
-  .frm__status[data-state='error'] { border: 1px solid var(--hot); color: var(--hot); }
+  .frm__status[data-state='error'] { border: 1px solid var(--accent); color: var(--accent); }
   .frm__status[data-state='sending'] { border: 1px solid var(--line); color: var(--fg-muted); }
 </style>

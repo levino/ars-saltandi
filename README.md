@@ -28,20 +28,31 @@ Kein Login, kein Backend. Datei ändern, Pull Request, fertig.
 
 | Was | Wo |
 |---|---|
-| **Stundenplan** | `src/data/schedule.ts` |
-| **Preise, Adressen, Kontakt, Navigation** | `src/data/site.ts` |
+| **Stundenplan** | `src/content/schedule/*.yaml` — eine Datei pro Wochentag |
+| **Preise** | `src/content/preise.yaml` |
+| **Freie Plätze** (Startseite) | `src/content/freie-plaetze.yaml` |
 | **Kurse** | `src/content/courses/*.md` |
 | **Dozent:innen** | `src/content/teachers/*.md` |
 | **News** | `src/content/news/*.md` |
+| **Fotos** | `src/assets/photos/` + Zuordnung in `src/lib/photos.ts` |
+| **Adressen, Kontakt, Navigation** | `src/data/site.ts` |
 
 ### Stundenplan ändern
 
-`src/data/schedule.ts` ist die einzige Quelle der Wahrheit. Ein Eintrag sieht so aus:
+Pro Wochentag eine YAML-Datei. Ein Eintrag sieht so aus:
 
-```ts
-{ day: 'Montag', studio: 3, start: '16:00', end: '17:00',
-  title: 'Ballett (ab 10)', teacher: 'Karen', levels: [1] },
+```yaml
+  - studio: 3
+    start: "16:00"
+    end: "17:00"
+    title: Ballett (ab 10)
+    teacher: Karen
+    levels: [1]
 ```
+
+Beim Build wird jede Zeile geprüft: Uhrzeiten müssen `HH:MM` sein, das Ende nach dem
+Beginn liegen, Studio 1–5, Level 0–3. Unbekannte Feldnamen brechen den Build — ein
+Tippfehler fällt also auf, bevor er online geht.
 
 Daraus entstehen automatisch:
 
@@ -96,6 +107,35 @@ online gehen.
 
 ---
 
+## Gestaltung
+
+Die Website folgt der bestehenden CI der Schule, nicht einer neuen:
+
+- **Markenschwarz `#241f21`** — aus der Wortmarke abgenommen
+- **Signalrot `#ff0000`** — wie die Level-Markierungen im gedruckten Stundenplan
+- **Weiß**
+
+Mehr Farben hat die CI nicht; alles Weitere sind Abstufungen desselben Schwarz. Die
+Farbigkeit kommt aus den Fotos. Die Tokens stehen gesammelt oben in
+`src/styles/global.css`.
+
+Logo, Signet und die Logos der Teilbereiche (Dance & Drama School, Moving Arts,
+Company, e.V.) liegen in `src/assets/brand/`. Die Schrift **Oswald** wird unter
+`public/fonts/` selbst ausgeliefert — es gehen keine Daten an Google.
+
+### Ein Foto austauschen
+
+Bild nach `src/assets/photos/` legen (WebP, etwa 1600–2000 px breit) und in
+`src/lib/photos.ts` dem Kurs-Slug zuordnen. Kurse ohne Foto bekommen automatisch eine
+Platzhalterkarte mit dem Signet — es sieht also nie kaputt aus.
+
+Für News steht das Bild im Frontmatter des Beitrags:
+
+```markdown
+image: buehne-traces
+credit: Walter Hapke
+```
+
 ## Formulare
 
 Die Website ist vollständig statisch **bis auf eine Route**: `src/pages/api/form.ts`
@@ -148,10 +188,11 @@ eine veröffentlichte Änderung.
       sollte einmal von der Schule bestätigt werden
 - [ ] **Studio-Zuordnung bestätigen** — welche Studionummern liegen in der
       Carl-Zeiss-Straße 26, welche in der 18a?
-- [ ] **Fotos ergänzen** — die alte Seite hat 694 Medien; eine kuratierte Auswahl
-      nach `src/assets/` übernehmen
-- [ ] **Schrift selbst hosten** — Bebas Neue liegt derzeit bei Google Fonts;
-      lokal gehostet entfällt die Datenübermittlung und der Datenschutzhinweis
+- [ ] **Fotos für Bauchtanz und die inklusive Tanzgruppe** — für diese beiden Kurse
+      fand sich im Medienarchiv kein passendes Bild; sie zeigen bis dahin eine
+      Platzhalterkarte
+- [ ] **Bildnachweise prüfen** — als Fotograf ist Walter Hapke genannt; bitte
+      bestätigen und gegebenenfalls ergänzen
 - [ ] **Brevo-Secret setzen** und einen Testversand durchführen
 - [ ] **Weiterleitungen einrichten** — die alten `/index.php/...`-Adressen auf die
       neuen Adressen umbiegen, damit Google-Treffer und geteilte Links weiter
