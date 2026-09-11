@@ -55,14 +55,14 @@ import { site } from '../data/site'
         mitarbeiten oder Fördermitglied werden.
       </p>
       <p>
-        Spenden laufen über <a href={site.betterplace} rel="noopener">betterplace.org</a> und
-        sind steuerlich absetzbar.
+        Als gemeinnütziger Verein stellen wir für Spenden eine Zuwendungsbestätigung aus —
+        sie sind also steuerlich absetzbar. Schreibt uns einfach, dann klären wir das Weitere.
       </p>
     </div>
 
     <div class="cluster foot">
-      <a href={site.betterplace} class="btn" rel="noopener">Spenden</a>
-      <a href="/kontakt/" class="btn btn--ghost">Mitmachen</a>
+      <a href="/kontakt/" class="btn">Spenden &amp; Mitmachen</a>
+      <a href={`mailto:${site.email}`} class="btn btn--ghost">{site.email}</a>
     </div>
   </div>
 </Base>

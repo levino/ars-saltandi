@@ -71,7 +71,7 @@ const companies = selectionGroupTitles(await getSlots())
   .page-title { font-size: var(--step-4); margin-block: 0.4rem 1rem; }
   .page-lead { font-size: var(--step-1); max-width: 56ch; }
   .intro { margin-bottom: clamp(3rem, 7vw, 4.5rem); color: var(--fg-muted); }
-  .intro a { color: var(--accent); }
+  .intro a:not(.btn) { color: var(--accent); }
 
   .groups { padding-block: 2.5rem; border-top: 1px solid var(--line); }
   .groups__h { font-size: var(--step-2); margin-bottom: 1.5rem; }
@@ -84,7 +84,7 @@ const companies = selectionGroupTitles(await getSlots())
     border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; font-weight: 600;
   }
   .groups__note { font-size: var(--step--1); }
-  .groups__note a { color: var(--accent); }
+  .groups__note a:not(.btn) { color: var(--accent); }
   .tag--sel { color: var(--accent); }
 
   .book {

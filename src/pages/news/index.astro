@@ -66,7 +66,10 @@ const KIND: Record<string, string> = {
   .post__meta { display: flex; flex-wrap: wrap; gap: 0.7rem; align-items: center; font-size: var(--step--1); color: var(--fg-muted); }
   .post__main { display: grid; gap: 1.5rem; align-items: start; }
   @media (min-width: 640px) { .post__main { grid-template-columns: minmax(0, 1fr) 180px; } }
-  .post__img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--radius); }
+  .post__img {
+    width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--radius);
+    background: var(--paper-2); border: 1px solid var(--line);
+  }
   .post__title { font-size: var(--step-2); margin-bottom: 0.5rem; }
   .tag--kind { color: var(--fg); }
 </style>

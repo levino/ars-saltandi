@@ -7,7 +7,7 @@ const path = Astro.url.pathname
 const isActive = (href: string) => path === href || (href !== '/' && path.startsWith(href))
 ---
 
-<header class="hdr">
+<header class="hdr on-dark">
   <div class="wrap hdr__inner">
     <a href="/" class="logo" aria-label={`${site.name} — Startseite`}>
       <Image src={signet} alt="" width={38} height={38} class="logo__signet" loading="eager" />
@@ -47,11 +47,12 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
 </header>
 
 <style>
+  /* Der Kopf trägt den Blauverlauf der bisherigen Website. */
   .hdr {
     position: sticky; top: 0; z-index: 50;
-    background: color-mix(in oklab, var(--ink) 88%, transparent);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--line);
+    background-color: #000;
+    background-image: linear-gradient(var(--blue) 0%, #000 61%);
+    border-bottom: 1px solid color-mix(in oklab, #fff 18%, transparent);
   }
   .hdr__inner { display: flex; align-items: center; gap: 1rem; padding-block: 0.8rem; }
 
@@ -62,8 +63,8 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
   .logo__text { display: flex; flex-direction: column; gap: 0.25rem; line-height: 1; }
   .logo__wordmark { width: clamp(120px, 18vw, 170px); height: auto; }
   .logo__sub {
-    font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase;
-    color: var(--fg-muted); white-space: nowrap;
+    font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #d5d3da; white-space: nowrap;
   }
   @media (max-width: 560px) { .logo__sub { display: none; } }
 
@@ -71,7 +72,7 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
   .nav__list { display: flex; gap: clamp(0.7rem, 1.8vw, 1.5rem); list-style: none; padding: 0; margin: 0; }
   .nav__list a {
     text-decoration: none; font-size: var(--step--1); font-weight: 600;
-    letter-spacing: 0.04em; color: var(--fg-muted); white-space: nowrap;
+    letter-spacing: 0.04em; color: #d5d3da; white-space: nowrap;
     transition: color 0.15s;
   }
   .nav__list a:hover, .nav__list a[aria-current='page'] { color: var(--fg); }

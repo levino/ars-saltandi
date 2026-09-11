@@ -4,7 +4,7 @@ import wortmarke from '../assets/brand/wortmarke-weiss.webp'
 import { site, locations } from '../data/site'
 ---
 
-<footer class="ftr">
+<footer class="ftr on-dark">
   <div class="wrap">
     <div class="ftr__top">
       <div>
@@ -40,7 +40,6 @@ import { site, locations } from '../data/site'
             <li><a href="/news/">News</a></li>
             <li><a href={site.instagram} rel="me noopener">Instagram</a></li>
             <li><a href={site.shop} rel="noopener">Shop</a></li>
-            <li><a href={site.betterplace} rel="noopener">Spenden</a></li>
           </ul>
         </div>
       </div>
@@ -77,17 +76,21 @@ import { site, locations } from '../data/site'
 </footer>
 
 <style>
-  .ftr { border-top: 1px solid var(--line); padding-block: clamp(2.5rem, 6vw, 5rem) 2rem; background: var(--ink-2); }
+  .ftr {
+    padding-block: clamp(2.5rem, 6vw, 5rem) 2rem;
+    background-color: #000;
+    background-image: linear-gradient(180deg, #000 0%, var(--blue-deep) 100%);
+  }
   .ftr__top { display: grid; gap: clamp(2rem, 5vw, 4rem); grid-template-columns: 1fr; margin-bottom: 2.5rem; }
   @media (min-width: 800px) { .ftr__top { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); } }
 
   .ftr__logo { width: clamp(180px, 26vw, 260px); height: auto; margin-bottom: 1.6rem; }
   .ftr__claim { font-size: var(--step-3); margin-bottom: 1.4rem; }
   .ftr__cols { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
-  .ftr__h { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.9rem; font-weight: 700; }
+  .ftr__h { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-text); margin-bottom: 0.9rem; font-weight: 700; }
   .ftr ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.5rem; }
-  .ftr a { color: var(--fg-muted); text-decoration: none; font-size: var(--step--1); }
-  .ftr a:hover { color: var(--fg); text-decoration: underline; }
+  .ftr a:not(.btn) { color: var(--fg-muted); text-decoration: none; font-size: var(--step--1); }
+  .ftr a:not(.btn):hover { color: var(--fg); text-decoration: underline; }
 
   .ftr__locs { display: grid; gap: 1.8rem; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); padding-block: 2rem; }
   .ftr__locs p { font-size: var(--step--1); line-height: 1.7; }

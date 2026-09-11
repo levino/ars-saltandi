@@ -89,7 +89,7 @@ const prices = (await getEntry('prices', 'preise'))!.data
     margin-top: 1.2rem; padding: 1.6rem;
     border: 1px dashed var(--line); border-radius: var(--radius);
   }
-  .note__h { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.8rem; }
+  .note__h { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-text); margin-bottom: 0.8rem; }
   .note p { font-size: var(--step--1); color: var(--fg-muted); max-width: 70ch; }
 
   .help {
@@ -100,5 +100,5 @@ const prices = (await getEntry('prices', 'preise'))!.data
   @media (min-width: 860px) { .help { grid-template-columns: 1.3fr 1fr; } }
   .help__h { font-size: var(--step-2); margin-bottom: 0.8rem; }
   .next ol { margin: 0; padding-left: 1.2rem; display: grid; gap: 0.7rem; font-size: var(--step--1); }
-  .next a { color: var(--accent); }
+  .next a:not(.btn) { color: var(--accent); }
 </style>

@@ -26,7 +26,7 @@ const fmt = new Intl.DateTimeFormat('de-DE', { day: '2-digit', month: 'long', ye
 ---
 
 <Base bleed>
-  <section class="hero">
+  <section class="hero on-dark">
     <Image
       src={heroImage}
       alt="Zwei Artistinnen in einer Partnerakrobatik-Figur auf der Bühne"
@@ -189,7 +189,7 @@ const fmt = new Intl.DateTimeFormat('de-DE', { day: '2-digit', month: 'long', ye
     </div>
   </section>
 
-  <section class="section cta-band">
+  <section class="section cta-band on-dark">
     <div class="wrap-narrow" style="text-align: center;">
       <h2 class="display cta-band__title">Einfach mal ausprobieren</h2>
       <p class="sec-lead text-muted" style="margin-inline: auto;">
@@ -205,7 +205,8 @@ const fmt = new Intl.DateTimeFormat('de-DE', { day: '2-digit', month: 'long', ye
 </Base>
 
 <style>
-  .hero { position: relative; padding-block: clamp(3rem, 9vw, 7rem) clamp(3rem, 8vw, 6rem); overflow: hidden; }
+  .hero { position: relative; background-color: #000;
+    background-image: linear-gradient(160deg, #000 0%, var(--blue-deep) 100%); padding-block: clamp(3rem, 9vw, 7rem) clamp(3rem, 8vw, 6rem); overflow: hidden; }
   .hero__img {
     position: absolute; inset: 0 0 0 auto;
     width: 52%; height: 100%; object-fit: cover; object-position: 50% 30%;
@@ -252,7 +253,14 @@ const fmt = new Intl.DateTimeFormat('de-DE', { day: '2-digit', month: 'long', ye
   .disc-dot--art { background: var(--fg); }
 
   .course { text-decoration: none; overflow: hidden; }
-  .course__img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+  /* Viele Studiofotos sind vor weißem Hintergrund aufgenommen. Auf der
+     hellen Seite brauchen sie eine eigene Fläche und eine Kante, sonst
+     verschwimmen sie mit der Karte. */
+  .course__img {
+    width: 100%; aspect-ratio: 4 / 3; object-fit: cover;
+    background: var(--paper-2);
+    border-bottom: 1px solid var(--line);
+  }
   .course__img--none {
     display: grid; place-items: center;
     background: repeating-linear-gradient(135deg, var(--ink-2) 0 14px, var(--ink-3) 14px 28px);
@@ -278,6 +286,6 @@ const fmt = new Intl.DateTimeFormat('de-DE', { day: '2-digit', month: 'long', ye
   .post__date { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; }
   .post__title { font-size: var(--step-1); margin-block: 0.5rem 0.6rem; }
 
-  .cta-band { background: linear-gradient(160deg, var(--ink-2), var(--ink)); border-top: 1px solid var(--line); }
+  .cta-band { background-color: #000; background-image: linear-gradient(160deg, #000, var(--blue-deep)); }
   .cta-band__title { font-size: var(--step-4); margin-bottom: 1rem; }
 </style>

@@ -81,3 +81,19 @@ export const selectionGroupTitles = (slots: Slot[]): string[] =>
   [...new Set(slots.filter((s) => s.selectionOnly).map((s) => s.title))].sort((a, b) =>
     a.localeCompare(b, 'de'),
   )
+
+/**
+ * Stundenplan-Titel → Kurs-Slug.
+ *
+ * Gebaut aus `scheduleTitles` der Kurse, damit jeder Termin im Wochenplan
+ * auf die passende Kursseite zeigt. Titel ohne Kurs (z. B. interne Gruppen)
+ * bleiben unverlinkt.
+ */
+export async function titleToCourse(): Promise<Map<string, string>> {
+  const courses = await getCollection('courses', (c) => !c.data.draft)
+  const map = new Map<string, string>()
+  for (const course of courses) {
+    for (const title of course.data.scheduleTitles) map.set(title, course.id)
+  }
+  return map
+}

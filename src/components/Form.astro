@@ -100,7 +100,7 @@ const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT || '/api/form'
   .frm__foot { display: grid; gap: 1.2rem; margin-top: 0.5rem; }
   .frm__check { display: flex; gap: 0.7rem; align-items: start; font-size: var(--step--1); color: var(--fg-muted); }
   .frm__check input { margin-top: 0.25em; flex: none; width: 1.1rem; height: 1.1rem; accent-color: var(--accent); }
-  .frm__check a { color: var(--accent); }
+  .frm__check a:not(.btn) { color: var(--accent); }
   .frm__foot .btn { justify-self: start; }
   .frm__status { font-size: var(--step--1); padding: 0.9rem 1.1rem; border-radius: 8px; }
   .frm__status[data-state='error'] { border: 1px solid var(--accent); color: var(--accent); }
