@@ -1,6 +1,9 @@
 ---
 import Base from '../layouts/Base.astro'
-import { prices, site } from '../data/site'
+import { getEntry } from 'astro:content'
+import { site } from '../data/site'
+
+const prices = (await getEntry('prices', 'preise'))!.data
 ---
 
 <Base
@@ -21,7 +24,7 @@ import { prices, site } from '../data/site'
       {prices.groups.map((g) => (
         <section class="ptable">
           <h2 class="display ptable__h">{g.title}</h2>
-          {'hint' in g && g.hint && <p class="ptable__hint">{g.hint}</p>}
+          {g.hint && <p class="ptable__hint">{g.hint}</p>}
           <dl>
             {g.items.map((i) => (
               <div class="prow">

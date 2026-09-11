@@ -1,14 +1,13 @@
 ---
 import Base from '../../layouts/Base.astro'
 import { getCollection } from 'astro:content'
-import { scheduleIndex } from '../../data/schedule'
+import { getSlots, slotsForTitles } from '../../lib/schedule'
 
 const courses = (await getCollection('courses', (c) => !c.data.draft)).sort(
   (a, b) => a.data.order - b.data.order,
 )
-const index = scheduleIndex()
-const countFor = (titles: string[]) =>
-  titles.reduce((n, t) => n + (index.get(t)?.length ?? 0), 0)
+const slots = await getSlots()
+const countFor = (titles: string[]) => slotsForTitles(slots, titles).length
 
 const groups = [
   { key: 'tanz' as const, label: 'Tanz', hint: 'Dance & Drama School · Carl-Zeiss-Straße 26' },

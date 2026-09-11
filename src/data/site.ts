@@ -30,37 +30,6 @@ export const locations = [
   },
 ] as const
 
-/** Preisliste 2026 — Quelle: Preisliste_2026.pdf. Preise pro Kurs und Monat. */
-export const prices = {
-  note: 'Die Preise gelten pro Kurs und Monat und setzen Bezahlung per Bankeinzug voraus. Bei Barzahlung oder Überweisung kommen wegen des höheren Verwaltungsaufwands 2,- € pro Kurs dazu.',
-  groups: [
-    {
-      title: 'Tanz — erster Kurs',
-      items: [
-        { label: 'Kinder bis 5 Jahre (45 min)', price: '30,- €' },
-        { label: 'Schüler*innen 5 – 17 Jahre', price: '35,- €' },
-        { label: 'Erwachsene', price: '37,- €' },
-      ],
-    },
-    {
-      title: 'Tanz — weitere Kurse',
-      hint: 'gilt nur für Tanz',
-      items: [
-        { label: 'als Zweitkurs', price: '25,- €' },
-        { label: 'als Drittkurs', price: '15,- €' },
-      ],
-    },
-    {
-      title: 'Moving Arts / Artistikstudio',
-      items: [
-        { label: 'Erster Kurs', price: '37,- €' },
-        { label: 'als Zweit-, Drittkurs etc.', price: '34,- €' },
-        { label: 'Workshops', price: 'je nach Angebot' },
-      ],
-    },
-  ],
-} as const
-
 export const nav = [
   { href: '/kurse/', label: 'Kurse' },
   { href: '/stundenplan/', label: 'Stundenplan' },

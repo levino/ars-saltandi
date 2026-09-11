@@ -1,0 +1,115 @@
+# Wochenplan — Freitag
+#
+# Diese Datei ist die Quelle der Wahrheit für alle Freitagstermine.
+# Änderungen erscheinen sofort auf /stundenplan, auf den Kursseiten und im Team.
+#
+# level: 0 = Einsteiger · 1 = Einsteiger mit Vorkenntnissen
+#        2 = fortgeschritten · 3 = sehr fortgeschritten
+# selectionOnly: Leistungsgruppe des Fördersystems — Teilnahme nach Auswahl
+# internal:      interne Gruppe, keine offene Anmeldung
+# note:          freier Hinweis, z. B. "Start 28.08."
+
+day: Freitag
+order: 5
+slots:
+  - studio: 1
+    start: "15:00"
+    end: "16:00"
+    title: Mini-Talente
+    teacher: Katrin
+    selectionOnly: true
+  - studio: 1
+    start: "16:00"
+    end: "17:00"
+    title: Pre-Talente
+    teacher: Christine
+    selectionOnly: true
+  - studio: 1
+    start: "17:00"
+    end: "18:00"
+    title: ARS SALTANDI (13-17)
+    teacher: Christine
+  - studio: 1
+    start: "18:00"
+    end: "19:00"
+    title: Contemporary Jazz (12-18)
+    teacher: Pia
+  - studio: 2
+    start: "15:00"
+    end: "16:00"
+    title: ARS SALTANDI ab 10
+    teacher: Christine
+    note: Start 28.08.
+  - studio: 2
+    start: "16:00"
+    end: "17:00"
+    title: Stepptanz J & E
+    teacher: Anne
+    levels: [2]
+  - studio: 2
+    start: "17:00"
+    end: "18:00"
+    title: Stepptanz
+    teacher: Anne
+    internal: true
+  - studio: 3
+    start: "15:00"
+    end: "16:00"
+    title: ARS SALTANDI (7-9)
+    teacher: Pia
+  - studio: 3
+    start: "16:00"
+    end: "17:00"
+    title: HipHop (12-15)
+    teacher: Pia
+  - studio: 3
+    start: "17:00"
+    end: "18:00"
+    title: HipHop (ab 16)
+    teacher: Pia
+  - studio: 4
+    start: "14:30"
+    end: "15:30"
+    title: Aerial Arts (6-8)
+    teacher: Larissa
+  - studio: 4
+    start: "15:30"
+    end: "16:30"
+    title: Aerial Dance
+    teacher: Larissa
+  - studio: 4
+    start: "16:45"
+    end: "17:45"
+    title: Aerial Yoga (J+E)
+    teacher: Tina
+    levels: [2]
+  - studio: 5
+    start: "15:00"
+    end: "16:00"
+    title: Akrobatik
+    teacher: Ben
+    levels: [2]
+  - studio: 5
+    start: "16:00"
+    end: "17:00"
+    title: Akrobatik
+    teacher: Ben
+    levels: [3]
+  - studio: 5
+    start: "17:15"
+    end: "18:15"
+    title: Tumbling Airtrack ab 10
+    teacher: Gordon
+    levels: [1]
+  - studio: 5
+    start: "18:15"
+    end: "19:15"
+    title: Tumbling Airtrack
+    teacher: Gordon
+    levels: [2]
+  - studio: 5
+    start: "19:15"
+    end: "20:15"
+    title: Tumbling Airtrack
+    teacher: Gordon
+    levels: [3]

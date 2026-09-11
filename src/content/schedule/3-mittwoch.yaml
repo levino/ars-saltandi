@@ -1,0 +1,134 @@
+# Wochenplan — Mittwoch
+#
+# Diese Datei ist die Quelle der Wahrheit für alle Mittwochstermine.
+# Änderungen erscheinen sofort auf /stundenplan, auf den Kursseiten und im Team.
+#
+# level: 0 = Einsteiger · 1 = Einsteiger mit Vorkenntnissen
+#        2 = fortgeschritten · 3 = sehr fortgeschritten
+# selectionOnly: Leistungsgruppe des Fördersystems — Teilnahme nach Auswahl
+# internal:      interne Gruppe, keine offene Anmeldung
+# note:          freier Hinweis, z. B. "Start 28.08."
+
+day: Mittwoch
+order: 3
+slots:
+  - studio: 1
+    start: "15:00"
+    end: "16:00"
+    title: ARS SALTANDI (5 u. 6)
+    teacher: Christine
+  - studio: 1
+    start: "16:00"
+    end: "17:00"
+    title: ARS SALTANDI (7-9)
+    teacher: Christine
+  - studio: 1
+    start: "17:00"
+    end: "18:00"
+    title: Tanzakrobatik (ab 12)
+    teacher: Christine
+    levels: [2]
+  - studio: 1
+    start: "18:00"
+    end: "19:00"
+    title: ARS SALTANDI ab 13
+    teacher: Christine
+  - studio: 1
+    start: "19:15"
+    end: "20:45"
+    title: Modern Dance
+    teacher: Katrin
+    levels: [3]
+  - studio: 2
+    start: "17:25"
+    end: "17:55"
+    title: Spitzentanz
+    teacher: Katrin
+  - studio: 3
+    start: "16:00"
+    end: "17:00"
+    title: Inklusive Tanzgruppe
+  - studio: 3
+    start: "17:15"
+    end: "18:15"
+    title: HipHop
+    teacher: Pia
+    levels: [1]
+  - studio: 3
+    start: "18:15"
+    end: "19:15"
+    title: HipHop Masterclass
+    teacher: Pia
+  - studio: 3
+    start: "19:15"
+    end: "20:15"
+    title: Dancehall (ab 16)
+    teacher: Isabell
+  - studio: 4
+    start: "14:00"
+    end: "15:00"
+    title: Rhönrad
+    teacher: Larissa
+    levels: [0]
+  - studio: 4
+    start: "15:00"
+    end: "16:00"
+    title: Vertikaltuch
+    levels: [0]
+  - studio: 4
+    start: "16:00"
+    end: "17:00"
+    title: Aerial Junior Company
+    teacher: Doorke & Albertine
+    selectionOnly: true
+  - studio: 4
+    start: "17:00"
+    end: "18:00"
+    title: Rhönrad
+    teacher: Larissa
+    levels: [2]
+  - studio: 4
+    start: "18:00"
+    end: "19:00"
+    title: Rhönrad Company
+    teacher: Larissa
+    selectionOnly: true
+  - studio: 4
+    start: "19:00"
+    end: "20:00"
+    title: Rhönrad Company
+    teacher: Larissa
+    selectionOnly: true
+  - studio: 4
+    start: "20:00"
+    end: "21:00"
+    title: Cyr Wheel
+    teacher: Larissa
+    levels: [0, 1, 2, 3]
+  - studio: 5
+    start: "15:00"
+    end: "16:00"
+    title: ARS SALTANDI (5 u. 6)
+    teacher: Pia
+  - studio: 5
+    start: "16:00"
+    end: "17:00"
+    title: ARS SALTANDI (7-9)
+    teacher: Pia
+  - studio: 5
+    start: "17:00"
+    end: "18:00"
+    title: Aerial Company
+    teacher: Doorke & Albertine
+    selectionOnly: true
+  - studio: 5
+    start: "18:00"
+    end: "19:00"
+    title: Modern Dance
+    teacher: Katrin
+    levels: [2]
+  - studio: 5
+    start: "19:00"
+    end: "20:00"
+    title: Akrobatik (J+E)
+    teacher: Luise

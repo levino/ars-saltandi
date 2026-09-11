@@ -1,16 +1,19 @@
 ---
 import Base from '../layouts/Base.astro'
 import { getCollection, render } from 'astro:content'
-import { slotsForTeacher } from '../data/schedule'
+import { getSlots, slotsForTeacher } from '../lib/schedule'
 
 const teachers = (await getCollection('teachers', (t) => !t.data.draft)).sort(
   (a, b) => a.data.order - b.data.order,
 )
+const slots = await getSlots()
 const rendered = await Promise.all(
   teachers.map(async (t) => ({
     entry: t,
     Content: (await render(t)).Content,
-    courses: [...new Set(slotsForTeacher(t.data.scheduleName).map((s) => s.title))].sort(),
+    courses: [...new Set(slotsForTeacher(slots, t.data.scheduleName).map((s) => s.title))].sort(
+      (a, b) => a.localeCompare(b, 'de'),
+    ),
   })),
 )
 ---

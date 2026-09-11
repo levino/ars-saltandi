@@ -2,7 +2,7 @@
 import type { GetStaticPaths } from 'astro'
 import Base from '../../layouts/Base.astro'
 import { getCollection, render } from 'astro:content'
-import { scheduleIndex, LEVEL_LABELS, toMinutes, WEEKDAYS, type Slot } from '../../data/schedule'
+import { getSlots, slotsForTitles, teacherNames, LEVEL_LABELS } from '../../lib/schedule'
 import { locations } from '../../data/site'
 
 export const getStaticPaths = (async () => {
@@ -13,17 +13,12 @@ export const getStaticPaths = (async () => {
 const { course } = Astro.props
 const { Content } = await render(course)
 
-const index = scheduleIndex()
-const courseSlots: Slot[] = course.data.scheduleTitles
-  .flatMap((t) => index.get(t) ?? [])
-  .sort(
-    (a, b) =>
-      WEEKDAYS.indexOf(a.day) - WEEKDAYS.indexOf(b.day) || toMinutes(a.start) - toMinutes(b.start),
-  )
+// getSlots() liefert bereits nach Tag und Uhrzeit sortiert.
+const courseSlots = slotsForTitles(await getSlots(), course.data.scheduleTitles)
 
-const teacherNames = [...new Set(courseSlots.map((s) => s.teacher).filter(Boolean))]
+const names = teacherNames(courseSlots)
 const allTeachers = await getCollection('teachers', (t) => !t.data.draft)
-const teachers = allTeachers.filter((t) => teacherNames.some((n) => n?.includes(t.data.scheduleName)))
+const teachers = allTeachers.filter((t) => names.some((n) => n.includes(t.data.scheduleName)))
 
 const location = locations.find((l) => l.id === course.data.location)!
 const openSlots = courseSlots.filter((s) => !s.selectionOnly && !s.internal)

@@ -1,8 +1,8 @@
 ---
 import Base from '../layouts/Base.astro'
-import { slots } from '../data/schedule'
+import { getSlots, selectionGroupTitles } from '../lib/schedule'
 
-const companies = [...new Set(slots.filter((s) => s.selectionOnly).map((s) => s.title))].sort()
+const companies = selectionGroupTitles(await getSlots())
 ---
 
 <Base

@@ -1,14 +1,18 @@
 ---
-import { WEEKDAYS, slots, slotsByDay, LEVEL_LABELS, toMinutes, type Slot } from '../data/schedule'
+import {
+  getSlots,
+  getSlotsByDay,
+  teacherNames,
+  duration,
+  LEVEL_LABELS,
+  type Slot,
+} from '../lib/schedule'
 
-const days = WEEKDAYS.map((day) => ({ day, slots: slotsByDay(day) }))
-
-const teachers = [...new Set(slots.map((s) => s.teacher).filter((t): t is string => Boolean(t)))].sort(
-  (a, b) => a.localeCompare(b, 'de'),
-)
+const slots = await getSlots()
+const days = await getSlotsByDay()
+const teachers = teacherNames(slots)
 
 const timeLabel = (s: Slot) => `${s.start}–${s.end}`
-const duration = (s: Slot) => toMinutes(s.end) - toMinutes(s.start)
 ---
 
 <div class="sched" data-schedule>

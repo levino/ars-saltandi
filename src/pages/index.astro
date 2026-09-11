@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro'
 import { getCollection } from 'astro:content'
-import { slots, freeSpots } from '../data/schedule'
+import { getSlots, teacherNames } from '../lib/schedule'
 import { locations, site } from '../data/site'
 
 const courses = (await getCollection('courses', (c) => !c.data.draft)).sort(
@@ -14,7 +14,10 @@ const news = (await getCollection('news', (n) => !n.data.draft))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 3)
 
-const teacherCount = new Set(slots.map((s) => s.teacher).filter(Boolean)).size
+const slots = await getSlots()
+const teacherCount = teacherNames(slots).length
+
+const freeSpots = (await getCollection('freeSpots')).map((e) => e.data)
 const fmt = new Intl.DateTimeFormat('de-DE', { day: '2-digit', month: 'long', year: 'numeric' })
 ---
 
