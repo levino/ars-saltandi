@@ -1,0 +1,143 @@
+---
+import type { GetStaticPaths } from 'astro'
+import Base from '../../layouts/Base.astro'
+import { getCollection, render } from 'astro:content'
+import { scheduleIndex, LEVEL_LABELS, toMinutes, WEEKDAYS, type Slot } from '../../data/schedule'
+import { locations } from '../../data/site'
+
+export const getStaticPaths = (async () => {
+  const courses = await getCollection('courses', (c) => !c.data.draft)
+  return courses.map((course) => ({ params: { slug: course.id }, props: { course } }))
+}) satisfies GetStaticPaths
+
+const { course } = Astro.props
+const { Content } = await render(course)
+
+const index = scheduleIndex()
+const courseSlots: Slot[] = course.data.scheduleTitles
+  .flatMap((t) => index.get(t) ?? [])
+  .sort(
+    (a, b) =>
+      WEEKDAYS.indexOf(a.day) - WEEKDAYS.indexOf(b.day) || toMinutes(a.start) - toMinutes(b.start),
+  )
+
+const teacherNames = [...new Set(courseSlots.map((s) => s.teacher).filter(Boolean))]
+const allTeachers = await getCollection('teachers', (t) => !t.data.draft)
+const teachers = allTeachers.filter((t) => teacherNames.some((n) => n?.includes(t.data.scheduleName)))
+
+const location = locations.find((l) => l.id === course.data.location)!
+const openSlots = courseSlots.filter((s) => !s.selectionOnly && !s.internal)
+---
+
+<Base title={course.data.title} description={course.data.summary}>
+  <div class="wrap">
+    <nav class="crumbs text-muted"><a href="/kurse/">Kurse</a> / {course.data.title}</nav>
+
+    <header class="page-head">
+      <p class="eyebrow">{course.data.discipline === 'tanz' ? 'Tanz' : 'Artistik'}</p>
+      <h1 class="display page-title">{course.data.title}</h1>
+      <p class="page-lead">{course.data.summary}</p>
+      <dl class="facts">
+        <div><dt>Alter</dt><dd>{course.data.ages}</dd></div>
+        <div><dt>Ort</dt><dd>{location.name}<br /><span class="text-muted">{location.street}, {location.city}</span></dd></div>
+        {openSlots.length > 0 && (
+          <div><dt>Termine</dt><dd>{openSlots.length} pro Woche</dd></div>
+        )}
+      </dl>
+    </header>
+
+    <div class="layout">
+      <div class="prose">
+        <Content />
+      </div>
+
+      <aside class="side">
+        {courseSlots.length > 0 && (
+          <div class="panel">
+            <h2 class="panel__h">Termine</h2>
+            <ul class="times">
+              {courseSlots.map((s) => (
+                <li>
+                  <span class="times__day">{s.day}</span>
+                  <span class="times__time">{s.start}–{s.end}</span>
+                  <span class="times__meta text-muted">
+                    Studio {s.studio}{s.teacher && <> · {s.teacher}</>}
+                  </span>
+                  <span class="cluster" style="--cluster-gap: .35rem">
+                    {s.levels?.map((l) => (
+                      <span class={`tag tag--level${l}`} title={LEVEL_LABELS[l]}>Level {l}</span>
+                    ))}
+                    {s.selectionOnly && <span class="tag tag--sel">Nach Auswahl</span>}
+                    {s.internal && <span class="tag tag--sel">Intern</span>}
+                    {s.note && <span class="tag tag--note">{s.note}</span>}
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <a href="/stundenplan/" class="panel__link">Ganzen Stundenplan ansehen →</a>
+          </div>
+        )}
+
+        {teachers.length > 0 && (
+          <div class="panel">
+            <h2 class="panel__h">Unterrichtet von</h2>
+            <ul class="people">
+              {teachers.map((t) => (
+                <li><a href={`/team/#${t.id}`}>{t.data.name}</a><span class="text-muted">{t.data.role}</span></li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        <div class="panel panel--cta">
+          <h2 class="panel__h">Reinschnuppern?</h2>
+          <p class="text-muted">Die erste Stunde ist zum Ausprobieren da.</p>
+          <a href={`/probestunde/?kurs=${encodeURIComponent(course.data.title)}`} class="btn">
+            Probestunde buchen
+          </a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .crumbs { font-size: var(--step--1); margin-bottom: 1.5rem; }
+  .crumbs a { color: var(--hot); }
+
+  .page-head { margin-bottom: 3rem; }
+  .page-title { font-size: var(--step-4); margin-block: 0.4rem 1rem; }
+  .page-lead { font-size: var(--step-1); max-width: 56ch; color: var(--fg-muted); }
+
+  .facts {
+    display: flex; flex-wrap: wrap; gap: 2rem;
+    margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--line);
+  }
+  .facts dt { font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--fg-muted); font-weight: 700; margin-bottom: 0.3rem; }
+  .facts dd { margin: 0; font-weight: 600; font-size: var(--step--1); line-height: 1.5; }
+
+  .layout { display: grid; gap: clamp(2rem, 5vw, 4rem); align-items: start; }
+  @media (min-width: 900px) { .layout { grid-template-columns: minmax(0, 1fr) 340px; } }
+
+  .side { display: grid; gap: 1.2rem; position: sticky; top: 6rem; }
+  @media (max-width: 899px) { .side { position: static; } }
+
+  .panel { padding: 1.5rem; background: var(--ink-2); border: 1px solid var(--line); border-radius: var(--radius); }
+  .panel--cta { background: linear-gradient(160deg, color-mix(in oklab, var(--hot) 18%, var(--ink-2)), var(--ink-2)); }
+  .panel--cta .btn { margin-top: 1rem; }
+  .panel__h { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--hot); margin-bottom: 1rem; }
+  .panel__link { display: inline-block; margin-top: 1.1rem; font-size: var(--step--1); color: var(--hot); text-decoration: none; }
+  .panel__link:hover { text-decoration: underline; }
+
+  .times { list-style: none; padding: 0; margin: 0; display: grid; gap: 1rem; }
+  .times li { display: grid; gap: 0.2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--line); }
+  .times li:last-child { border-bottom: 0; padding-bottom: 0; }
+  .times__day { font-weight: 700; font-size: var(--step--1); }
+  .times__time { font-variant-numeric: tabular-nums; font-size: var(--step--1); }
+  .times__meta { font-size: var(--step--1); }
+
+  .people { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.8rem; }
+  .people li { display: grid; gap: 0.15rem; font-size: var(--step--1); }
+  .people a { color: var(--fg); font-weight: 600; text-decoration: none; }
+  .people a:hover { color: var(--hot); }
+</style>

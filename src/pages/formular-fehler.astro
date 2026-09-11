@@ -1,0 +1,23 @@
+---
+import Base from '../layouts/Base.astro'
+import { site } from '../data/site'
+---
+<Base title="Das hat nicht geklappt">
+  <div class="wrap-narrow center">
+    <p class="eyebrow">Fehler</p>
+    <h1 class="display t">Das hat leider nicht geklappt</h1>
+    <p class="lead text-muted">
+      Deine Nachricht konnte nicht verschickt werden. Bitte versuch es noch einmal —
+      oder schreib uns einfach direkt.
+    </p>
+    <div class="cluster" style="justify-content: center; margin-top: 2rem;">
+      <a href={`mailto:${site.email}`} class="btn">{site.email}</a>
+      <a href={`tel:${site.phone}`} class="btn btn--ghost">{site.phoneDisplay}</a>
+    </div>
+  </div>
+</Base>
+<style>
+  .center { text-align: center; padding-block: clamp(3rem, 10vw, 7rem); }
+  .t { font-size: var(--step-3); margin-block: 0.5rem 1.2rem; }
+  .lead { font-size: var(--step-1); }
+</style>

@@ -1,0 +1,85 @@
+---
+import Base from '../layouts/Base.astro'
+import { site, locations } from '../data/site'
+---
+<Base title="Impressum" description="Impressum der ARS SALTANDI e.V., Hildesheim.">
+  <div class="wrap-narrow">
+    <header class="page-head">
+      <h1 class="display page-title">Impressum</h1>
+    </header>
+
+    <div class="prose">
+      <div class="todo">
+        <strong>Noch zu prüfen vor dem Livegang.</strong>
+        Die folgenden Angaben stammen aus der bisherigen Website und müssen von
+        ARS SALTANDI bestätigt werden — insbesondere Vorstand, Registernummer und
+        Umsatzsteuer-ID.
+      </div>
+
+      <h2>Angaben gemäß § 5 DDG</h2>
+      <p>
+        ARS SALTANDI e.V.<br />
+        {locations[0].street}<br />
+        {locations[0].city}
+      </p>
+
+      <h2>Kontakt</h2>
+      <p>
+        Telefon: <a href={`tel:${site.phone}`}>{site.phoneDisplay}</a><br />
+        E-Mail: <a href={`mailto:${site.email}`}>{site.email}</a>
+      </p>
+
+      <h2>Vertreten durch</h2>
+      <p>Der Vorstand gemäß § 26 BGB. <em>(Namen ergänzen)</em></p>
+
+      <h2>Registereintrag</h2>
+      <p>
+        Eingetragen im Vereinsregister.<br />
+        Registergericht: <em>(ergänzen)</em><br />
+        Registernummer: <em>(ergänzen)</em>
+      </p>
+
+      <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
+      <p><em>(Name und Anschrift ergänzen)</em></p>
+
+      <h2>Streitschlichtung</h2>
+      <p>
+        Wir sind nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer
+        Verbraucherschlichtungsstelle teilzunehmen.
+      </p>
+
+      <h2>Haftung für Inhalte</h2>
+      <p>
+        Als Diensteanbieter sind wir für eigene Inhalte auf diesen Seiten nach den allgemeinen
+        Gesetzen verantwortlich. Wir sind jedoch nicht verpflichtet, übermittelte oder
+        gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die
+        auf eine rechtswidrige Tätigkeit hinweisen.
+      </p>
+
+      <h2>Haftung für Links</h2>
+      <p>
+        Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen
+        Einfluss haben. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter
+        verantwortlich.
+      </p>
+
+      <h2>Urheberrecht</h2>
+      <p>
+        Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen
+        dem deutschen Urheberrecht. Fotos von Auftritten stammen teilweise von Dritten und sind
+        entsprechend gekennzeichnet.
+      </p>
+    </div>
+  </div>
+</Base>
+<style>
+  .page-head { margin-bottom: 2.5rem; }
+  .page-title { font-size: var(--step-3); }
+  .prose { color: var(--fg-muted); margin-bottom: 5rem; }
+  .prose h2 { color: var(--fg); font-size: var(--step-1); }
+  .todo {
+    padding: 1.1rem 1.3rem; border: 1px dashed var(--amber); border-radius: 10px;
+    color: var(--amber); font-size: var(--step--1);
+  }
+  .todo strong { display: block; margin-bottom: 0.3rem; }
+</style>

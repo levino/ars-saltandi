@@ -1,0 +1,101 @@
+---
+import Base from '../layouts/Base.astro'
+import { prices, site } from '../data/site'
+---
+
+<Base
+  title="Preise"
+  description="Kursgebühren der ARS SALTANDI Hildesheim — Preise pro Kurs und Monat, mit Ermäßigung ab dem zweiten Kurs."
+>
+  <div class="wrap">
+    <header class="page-head">
+      <p class="eyebrow">Kursgebühren</p>
+      <h1 class="display page-title">Preise</h1>
+      <p class="page-lead text-muted">
+        Alle Preise gelten pro Kurs und Monat. Wer mehrere Kurse belegt, zahlt ab dem
+        zweiten deutlich weniger.
+      </p>
+    </header>
+
+    <div class="tables">
+      {prices.groups.map((g) => (
+        <section class="ptable">
+          <h2 class="display ptable__h">{g.title}</h2>
+          {'hint' in g && g.hint && <p class="ptable__hint">{g.hint}</p>}
+          <dl>
+            {g.items.map((i) => (
+              <div class="prow">
+                <dt>{i.label}</dt>
+                <dd>{i.price}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      ))}
+    </div>
+
+    <aside class="note">
+      <h2 class="note__h">Zahlung</h2>
+      <p>{prices.note}</p>
+    </aside>
+
+    <section class="help">
+      <div>
+        <h2 class="display help__h">Geld soll nicht der Grund sein</h2>
+        <p class="text-muted">
+          Wenn die Kursgebühr für eure Familie ein Problem ist, sprecht uns an. Über unseren
+          Verein und Förderprogramme finden wir in vielen Fällen eine Lösung — vertraulich
+          und unkompliziert.
+        </p>
+        <div class="cluster" style="margin-top: 1.5rem;">
+          <a href="/kontakt/" class="btn">Kontakt aufnehmen</a>
+          <a href={`tel:${site.phone}`} class="btn btn--ghost">{site.phoneDisplay}</a>
+        </div>
+      </div>
+      <div class="next">
+        <h2 class="note__h">Nächste Schritte</h2>
+        <ol>
+          <li><a href="/stundenplan/">Kurs im Stundenplan finden</a></li>
+          <li><a href="/probestunde/">Probestunde vereinbaren</a></li>
+          <li><a href="/anmeldung/">Anmeldung ausfüllen</a></li>
+        </ol>
+      </div>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .page-head { margin-bottom: 3rem; }
+  .page-title { font-size: var(--step-4); margin-block: 0.4rem 1rem; }
+  .page-lead { font-size: var(--step-1); max-width: 54ch; }
+
+  .tables { display: grid; gap: 1.2rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  .ptable { padding: 1.6rem; background: var(--ink-2); border: 1px solid var(--line); border-radius: var(--radius); }
+  .ptable__h { font-size: var(--step-1); color: var(--hot); }
+  .ptable__hint { font-size: var(--step--1); color: var(--amber); margin-top: 0.3rem; }
+  .ptable dl { margin-top: 1.2rem; display: grid; gap: 0.2rem; }
+  .prow {
+    display: flex; justify-content: space-between; gap: 1rem; align-items: baseline;
+    padding-block: 0.7rem; border-bottom: 1px solid var(--line);
+  }
+  .prow:last-child { border-bottom: 0; }
+  .prow dt { font-size: var(--step--1); color: var(--fg-muted); }
+  .prow dd { margin: 0; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+  .note {
+    margin-top: 1.2rem; padding: 1.6rem;
+    border: 1px dashed var(--line); border-radius: var(--radius);
+  }
+  .note__h { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--hot); margin-bottom: 0.8rem; }
+  .note p { font-size: var(--step--1); color: var(--fg-muted); max-width: 70ch; }
+
+  .help {
+    display: grid; gap: clamp(2rem, 5vw, 4rem);
+    margin-block: clamp(3rem, 7vw, 5rem) 5rem;
+    padding-top: 2.5rem; border-top: 1px solid var(--line);
+  }
+  @media (min-width: 860px) { .help { grid-template-columns: 1.3fr 1fr; } }
+  .help__h { font-size: var(--step-2); margin-bottom: 0.8rem; }
+  .next ol { margin: 0; padding-left: 1.2rem; display: grid; gap: 0.7rem; font-size: var(--step--1); }
+  .next a { color: var(--hot); }
+</style>

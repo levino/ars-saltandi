@@ -1,0 +1,77 @@
+---
+import Base from '../../layouts/Base.astro'
+import { getCollection } from 'astro:content'
+import { scheduleIndex } from '../../data/schedule'
+
+const courses = (await getCollection('courses', (c) => !c.data.draft)).sort(
+  (a, b) => a.data.order - b.data.order,
+)
+const index = scheduleIndex()
+const countFor = (titles: string[]) =>
+  titles.reduce((n, t) => n + (index.get(t)?.length ?? 0), 0)
+
+const groups = [
+  { key: 'tanz' as const, label: 'Tanz', hint: 'Dance & Drama School · Carl-Zeiss-Straße 26' },
+  { key: 'artistik' as const, label: 'Artistik', hint: 'Moving Arts · Carl-Zeiss-Straße 18a' },
+]
+---
+
+<Base
+  title="Kurse"
+  description="Alle Tanz- und Artistikkurse der ARS SALTANDI in Hildesheim — von Kreativem Tanz ab 3,5 Jahren bis Cyr Wheel für Erwachsene."
+>
+  <div class="wrap">
+    <header class="page-head">
+      <p class="eyebrow">Kursangebot</p>
+      <h1 class="display page-title">Finde deinen Kurs</h1>
+      <p class="page-lead text-muted">
+        {courses.length} Kursarten an zwei Standorten. Wenn du unsicher bist:
+        Der <a href="/kurse/ars-saltandi/">ARS-SALTANDI-Kurs</a> hat von allem etwas —
+        Tanz, Akrobatik und Bühne in einer Stunde.
+      </p>
+    </header>
+
+    {groups.map((g) => (
+      <section class="disc">
+        <div class="disc__head">
+          <h2 class="display disc__title">{g.label}</h2>
+          <p class="text-muted disc__hint">{g.hint}</p>
+        </div>
+        <div class="grid grid--3">
+          {courses.filter((c) => c.data.discipline === g.key).map((c) => {
+            const n = countFor(c.data.scheduleTitles)
+            return (
+              <a class="card course" href={`/kurse/${c.id}/`}>
+                <h3 class="display course__title">{c.data.title}</h3>
+                <p class="course__ages">{c.data.ages}</p>
+                <p class="course__sum text-muted">{c.data.summary}</p>
+                {n > 0 && <p class="course__n">{n} {n === 1 ? 'Termin' : 'Termine'} pro Woche</p>}
+              </a>
+            )
+          })}
+        </div>
+      </section>
+    ))}
+  </div>
+</Base>
+
+<style>
+  .page-head { margin-bottom: 3rem; }
+  .page-title { font-size: var(--step-4); margin-block: 0.4rem 1rem; }
+  .page-lead { font-size: var(--step-1); max-width: 56ch; }
+  .page-lead a { color: var(--hot); }
+
+  .disc + .disc { margin-top: clamp(3rem, 7vw, 5rem); }
+  .disc__head { margin-bottom: 1.8rem; }
+  .disc__title { font-size: var(--step-2); color: var(--hot); }
+  .disc__hint { font-size: var(--step--1); margin-top: 0.3rem; }
+
+  .course { padding: 1.6rem; text-decoration: none; }
+  .course__title { font-size: var(--step-1); }
+  .course__ages { font-size: var(--step--1); font-weight: 600; margin-block: 0.35rem 0.7rem; color: var(--amber); }
+  .course__sum { font-size: var(--step--1); flex: 1; }
+  .course__n {
+    margin-top: 1rem; padding-top: 0.8rem; border-top: 1px solid var(--line);
+    font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; color: var(--fg-muted);
+  }
+</style>

@@ -1,0 +1,171 @@
+---
+import { WEEKDAYS, slots, slotsByDay, LEVEL_LABELS, toMinutes, type Slot } from '../data/schedule'
+
+const days = WEEKDAYS.map((day) => ({ day, slots: slotsByDay(day) }))
+
+const teachers = [...new Set(slots.map((s) => s.teacher).filter((t): t is string => Boolean(t)))].sort(
+  (a, b) => a.localeCompare(b, 'de'),
+)
+
+const timeLabel = (s: Slot) => `${s.start}–${s.end}`
+const duration = (s: Slot) => toMinutes(s.end) - toMinutes(s.start)
+---
+
+<div class="sched" data-schedule>
+  <div class="sched__filters">
+    <div class="filter">
+      <label for="f-search" class="filter__label">Suche</label>
+      <input id="f-search" type="search" placeholder="Kurs, z. B. Ballett" data-filter="search" autocomplete="off" />
+    </div>
+    <div class="filter">
+      <label for="f-teacher" class="filter__label">Dozent:in</label>
+      <select id="f-teacher" data-filter="teacher">
+        <option value="">Alle</option>
+        {teachers.map((t) => <option value={t}>{t}</option>)}
+      </select>
+    </div>
+    <div class="filter">
+      <label for="f-level" class="filter__label">Level</label>
+      <select id="f-level" data-filter="level">
+        <option value="">Alle</option>
+        {Object.entries(LEVEL_LABELS).map(([k, v]) => <option value={k}>{k} — {v}</option>)}
+      </select>
+    </div>
+    <button type="button" class="btn btn--ghost btn--sm" data-reset>Zurücksetzen</button>
+  </div>
+
+  <p class="sched__count" data-count aria-live="polite"></p>
+
+  <div class="sched__days">
+    {days.map(({ day, slots }) => (
+      <section class="day" data-day>
+        <h3 class="day__name display">{day}</h3>
+        <ul class="day__list">
+          {slots.map((s) => (
+            <li
+              class="slot"
+              data-slot
+              data-title={s.title.toLowerCase()}
+              data-teacher={s.teacher ?? ''}
+              data-levels={(s.levels ?? []).join(',')}
+              data-studio={s.studio}
+            >
+              <span class="slot__time">{timeLabel(s)}</span>
+              <span class="slot__body">
+                <span class="slot__title">{s.title}</span>
+                <span class="slot__meta text-muted">
+                  Studio {s.studio}
+                  {s.teacher && <> · {s.teacher}</>}
+                  {duration(s) !== 60 && <> · {duration(s)} min</>}
+                </span>
+                {(s.levels?.length || s.selectionOnly || s.note || s.internal) && (
+                  <span class="slot__tags cluster" style="--cluster-gap: .4rem">
+                    {s.levels?.map((l) => (
+                      <span class={`tag tag--level${l}`} title={LEVEL_LABELS[l]}>Level {l}</span>
+                    ))}
+                    {s.selectionOnly && <span class="tag tag--sel">Nach Auswahl</span>}
+                    {s.internal && <span class="tag tag--sel">Intern</span>}
+                    {s.note && <span class="tag tag--note">{s.note}</span>}
+                  </span>
+                )}
+              </span>
+            </li>
+          ))}
+        </ul>
+        <p class="day__empty" data-empty hidden>Keine Treffer an diesem Tag.</p>
+      </section>
+    ))}
+  </div>
+</div>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-schedule]')
+  if (root) {
+    const search = root.querySelector<HTMLInputElement>('[data-filter="search"]')!
+    const teacher = root.querySelector<HTMLSelectElement>('[data-filter="teacher"]')!
+    const level = root.querySelector<HTMLSelectElement>('[data-filter="level"]')!
+    const count = root.querySelector<HTMLElement>('[data-count]')!
+    const slots = [...root.querySelectorAll<HTMLElement>('[data-slot]')]
+    const days = [...root.querySelectorAll<HTMLElement>('[data-day]')]
+
+    const apply = () => {
+      const q = search.value.trim().toLowerCase()
+      const t = teacher.value
+      const l = level.value
+      let visible = 0
+
+      for (const slot of slots) {
+        const okQ = !q || (slot.dataset.title ?? '').includes(q)
+        const okT = !t || (slot.dataset.teacher ?? '').includes(t)
+        const levels = (slot.dataset.levels ?? '').split(',').filter(Boolean)
+        const okL = !l || levels.includes(l)
+        const show = okQ && okT && okL
+        slot.hidden = !show
+        if (show) visible++
+      }
+
+      for (const day of days) {
+        const any = [...day.querySelectorAll<HTMLElement>('[data-slot]')].some((s) => !s.hidden)
+        day.querySelector<HTMLElement>('[data-empty]')!.hidden = any
+      }
+
+      count.textContent =
+        visible === slots.length
+          ? `${slots.length} Kurstermine pro Woche`
+          : `${visible} von ${slots.length} Kursterminen`
+    }
+
+    root.addEventListener('input', apply)
+    root.querySelector('[data-reset]')?.addEventListener('click', () => {
+      search.value = ''; teacher.value = ''; level.value = ''
+      apply()
+    })
+    apply()
+  }
+</script>
+
+<style>
+  .sched__filters {
+    display: flex; flex-wrap: wrap; gap: 1rem; align-items: end;
+    padding: 1.2rem; margin-bottom: 1.5rem;
+    background: var(--ink-2); border: 1px solid var(--line); border-radius: var(--radius);
+  }
+  .filter { display: grid; gap: 0.35rem; flex: 1 1 170px; }
+  .filter__label { font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--fg-muted); font-weight: 700; }
+  .filter input, .filter select {
+    padding: 0.6em 0.8em; background: var(--ink); color: var(--fg);
+    border: 1px solid var(--line); border-radius: 8px; width: 100%;
+  }
+  .btn--sm { padding: 0.65em 1.1em; font-size: 0.7rem; }
+
+  .sched__count { font-size: var(--step--1); color: var(--fg-muted); margin-bottom: 2rem; }
+
+  .sched__days { display: grid; gap: 2.5rem; }
+  @media (min-width: 1000px) { .sched__days { grid-template-columns: repeat(2, 1fr); gap: 2.5rem 2rem; } }
+
+  .day__name { font-size: var(--step-2); color: var(--hot); margin-bottom: 0.8rem; }
+  .day__list { list-style: none; padding: 0; margin: 0; display: grid; gap: 2px; }
+  .day__empty { font-size: var(--step--1); color: var(--fg-muted); font-style: italic; padding: 0.8rem 0; }
+
+  .slot {
+    display: grid; grid-template-columns: 6.2rem 1fr; gap: 0.9rem;
+    padding: 0.8rem; border-radius: 10px; background: var(--ink-2);
+    border-left: 3px solid transparent;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .slot:hover { background: var(--ink-3); border-left-color: var(--hot); }
+  .slot[hidden] { display: none; }
+
+  .slot__time { font-variant-numeric: tabular-nums; font-weight: 700; font-size: var(--step--1); padding-top: 0.15em; }
+  .slot__body { display: grid; gap: 0.25rem; }
+  .slot__title { font-weight: 600; }
+  .slot__meta { font-size: var(--step--1); }
+  .slot__tags { margin-top: 0.2rem; }
+
+  .tag--sel { color: var(--electric); }
+  .tag--note { color: var(--amber); }
+
+  @media (max-width: 420px) {
+    .slot { grid-template-columns: 1fr; gap: 0.3rem; }
+  }
+</style>

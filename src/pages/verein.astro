@@ -1,0 +1,77 @@
+---
+import Base from '../layouts/Base.astro'
+import { site } from '../data/site'
+---
+<Base
+  title="Verein"
+  description="ARS SALTANDI e.V. — gemeinnütziger Verein für Tanz, Artistik und kulturelle Teilhabe in Hildesheim."
+>
+  <div class="wrap-narrow">
+    <header class="page-head">
+      <p class="eyebrow">Gemeinnützig seit Jahren</p>
+      <h1 class="display page-title">ARS SALTANDI e.V.</h1>
+      <p class="page-lead text-muted">
+        Hinter der Schule steht ein gemeinnütziger Verein. Das ist kein Formalie — es
+        entscheidet darüber, wer bei uns tanzen kann.
+      </p>
+    </header>
+
+    <div class="prose">
+      <p>
+        Als gemeinnütziger Verein arbeiten wir nicht gewinnorientiert. Was an Kursgebühren
+        hereinkommt, geht in Miete, Geräte, Honorare und Projekte zurück. Das erlaubt uns Dinge,
+        die sich ein normaler Betrieb nicht leisten könnte.
+      </p>
+
+      <h2>Was wir damit machen</h2>
+      <ul>
+        <li>
+          <strong>Inklusive Angebote.</strong> Unsere
+          <a href="/kurse/inklusive-tanzgruppe/">inklusive Tanzgruppe</a> bringt Menschen mit und
+          ohne Behinderung zusammen.
+        </li>
+        <li>
+          <strong>Teilhabe unabhängig vom Geldbeutel.</strong> Wenn eine Familie die Kursgebühr
+          nicht aufbringen kann, finden wir in vielen Fällen eine Lösung.
+        </li>
+        <li>
+          <strong>Kulturarbeit in der Stadt.</strong> Wir treten bei Stadtfesten, Festivals und
+          Aktionen auf — oft ohne Gage, weil es zur Stadt gehört.
+        </li>
+        <li>
+          <strong>Internationale Projekte.</strong> Das World Dance Project und Reisen zu
+          Gymnaestrada, Eurogym und Weltmeisterschaften.
+        </li>
+        <li>
+          <strong>Ausbildung.</strong> Wir bilden Trainer:innen aus und bieten Plätze im
+          <a href="/fsj/">FSJ Kultur</a>.
+        </li>
+      </ul>
+
+      <h2>Mitmachen</h2>
+      <p>
+        Es gibt viele Wege, den Verein zu unterstützen — und die wenigsten haben mit Tanzen
+        zu tun: bei Auftritten helfen, Kostüme nähen, fahren, Technik aufbauen, im Vorstand
+        mitarbeiten oder Fördermitglied werden.
+      </p>
+      <p>
+        Spenden laufen über <a href={site.betterplace} rel="noopener">betterplace.org</a> und
+        sind steuerlich absetzbar.
+      </p>
+    </div>
+
+    <div class="cluster foot">
+      <a href={site.betterplace} class="btn" rel="noopener">Spenden</a>
+      <a href="/kontakt/" class="btn btn--ghost">Mitmachen</a>
+    </div>
+  </div>
+</Base>
+<style>
+  .page-head { margin-bottom: 2.5rem; }
+  .page-title { font-size: var(--step-4); margin-block: 0.4rem 1rem; }
+  .page-lead { font-size: var(--step-1); max-width: 54ch; }
+  .prose { color: var(--fg-muted); }
+  .prose strong { color: var(--fg); }
+  .prose li + li { margin-top: 0.7rem; }
+  .foot { margin-block: 3rem 5rem; }
+</style>

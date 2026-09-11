@@ -1,0 +1,28 @@
+---
+import Base from '../layouts/Base.astro'
+import { site } from '../data/site'
+---
+<Base title="Danke">
+  <div class="wrap-narrow center">
+    <p class="eyebrow">Angekommen</p>
+    <h1 class="display t">Danke für deine Nachricht!</h1>
+    <p class="lead text-muted">
+      Wir haben deine Anfrage erhalten und melden uns so schnell wie möglich —
+      in der Regel innerhalb weniger Tage.
+    </p>
+    <div class="cluster" style="justify-content: center; margin-top: 2rem;">
+      <a href="/stundenplan/" class="btn">Zum Stundenplan</a>
+      <a href="/" class="btn btn--ghost">Zur Startseite</a>
+    </div>
+    <p class="text-muted small">
+      Dringend? Ruf uns an: <a href={`tel:${site.phone}`}>{site.phoneDisplay}</a>
+    </p>
+  </div>
+</Base>
+<style>
+  .center { text-align: center; padding-block: clamp(3rem, 10vw, 7rem); }
+  .t { font-size: var(--step-4); margin-block: 0.5rem 1.2rem; }
+  .lead { font-size: var(--step-1); }
+  .small { margin-top: 3rem; font-size: var(--step--1); }
+  .small a { color: var(--hot); }
+</style>

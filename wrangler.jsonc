@@ -1,0 +1,27 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "ars-saltandi",
+  "main": "@astrojs/cloudflare/entrypoints/server",
+  "compatibility_date": "2026-09-01",
+  "compatibility_flags": ["nodejs_compat"],
+
+  // Die Seiten sind vorgerendert und liegen als statische Dateien in
+  // dist/client. Cloudflare liefert sie direkt vom Edge aus; der Worker wird
+  // nur für /api/form aufgerufen.
+  "assets": {
+    "directory": "./dist/client",
+    "binding": "ASSETS",
+    "not_found_handling": "404-page"
+  },
+
+  "observability": { "enabled": true },
+
+  "vars": {
+    "MAIL_TO": "info@arssaltandi.de",
+    "MAIL_FROM": "website@arssaltandi.de",
+    "MAIL_FROM_NAME": "ARS SALTANDI Website"
+  }
+
+  // BREVO_API_KEY ist ein Secret und gehört nicht ins Repository:
+  //   npx wrangler secret put BREVO_API_KEY
+}

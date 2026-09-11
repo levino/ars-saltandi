@@ -1,0 +1,215 @@
+---
+import Base from '../layouts/Base.astro'
+import { getCollection } from 'astro:content'
+import { slots, freeSpots } from '../data/schedule'
+import { locations, site } from '../data/site'
+
+const courses = (await getCollection('courses', (c) => !c.data.draft)).sort(
+  (a, b) => a.data.order - b.data.order,
+)
+const tanz = courses.filter((c) => c.data.discipline === 'tanz')
+const artistik = courses.filter((c) => c.data.discipline === 'artistik')
+
+const news = (await getCollection('news', (n) => !n.data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3)
+
+const teacherCount = new Set(slots.map((s) => s.teacher).filter(Boolean)).size
+const fmt = new Intl.DateTimeFormat('de-DE', { day: '2-digit', month: 'long', year: 'numeric' })
+---
+
+<Base bleed>
+  <section class="hero">
+    <div class="hero__glow" aria-hidden="true"></div>
+    <div class="wrap hero__inner">
+      <p class="eyebrow">Tanz- & Artistikschule Hildesheim</p>
+      <h1 class="display hero__title">
+        Beweg dich<br />
+        <span class="hero__accent">wie du willst.</span>
+      </h1>
+      <p class="hero__lead">
+        Ballett, HipHop, Contemporary, Tanzakrobatik, Vertikaltuch, Rhönrad, Cyr Wheel —
+        über {slots.length} Kurstermine pro Woche, für alle ab 3,5 Jahren.
+      </p>
+      <div class="cluster hero__cta">
+        <a href="/probestunde/" class="btn">Probestunde buchen</a>
+        <a href="/stundenplan/" class="btn btn--ghost">Zum Stundenplan</a>
+      </div>
+
+      <dl class="stats">
+        <div><dt>Kurstermine pro Woche</dt><dd class="display">{slots.length}</dd></div>
+        <div><dt>Dozent:innen</dt><dd class="display">{teacherCount}</dd></div>
+        <div><dt>Studios</dt><dd class="display">5</dd></div>
+        <div><dt>Ab Alter</dt><dd class="display">3,5</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="section section--light">
+    <div class="wrap">
+      <p class="eyebrow">Zwei Häuser, eine Schule</p>
+      <h2 class="display sec-title">Wo wir tanzen</h2>
+      <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));">
+        {locations.map((l) => (
+          <article class="loc">
+            <h3 class="display loc__name">{l.name}</h3>
+            <p class="loc__addr">{l.street} · {l.city}</p>
+            <p>{l.blurb}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow">Kursangebot</p>
+      <h2 class="display sec-title">Finde deinen Kurs</h2>
+      <p class="sec-lead text-muted">
+        Du weißt noch nicht, was zu dir passt? Fang beim ARS-SALTANDI-Kurs an — da ist alles drin.
+      </p>
+
+      <h3 class="disc-head"><span class="disc-dot disc-dot--tanz"></span>Tanz</h3>
+      <div class="grid grid--3">
+        {tanz.map((c) => (
+          <a class="card course" href={`/kurse/${c.id}/`}>
+            <h4 class="display course__title">{c.data.title}</h4>
+            <p class="course__ages text-muted">{c.data.ages}</p>
+            <p class="course__sum">{c.data.summary}</p>
+          </a>
+        ))}
+      </div>
+
+      <h3 class="disc-head"><span class="disc-dot disc-dot--art"></span>Artistik &amp; Moving Arts</h3>
+      <div class="grid grid--3">
+        {artistik.map((c) => (
+          <a class="card course" href={`/kurse/${c.id}/`}>
+            <h4 class="display course__title">{c.data.title}</h4>
+            <p class="course__ages text-muted">{c.data.ages}</p>
+            <p class="course__sum">{c.data.summary}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--light">
+    <div class="wrap free">
+      <div>
+        <p class="eyebrow">Freie Plätze</p>
+        <h2 class="display sec-title">Hier ist noch was frei</h2>
+        <p class="sec-lead text-muted">
+          Stand des aktuellen Stundenplans. Ruf einfach an oder buch eine Probestunde.
+        </p>
+        <a href="/probestunde/" class="btn btn--light">Probestunde buchen</a>
+      </div>
+      <ul class="free__list">
+        {freeSpots.map((f) => (
+          <li>
+            <strong>{f.text}</strong>
+            <span class="text-muted">bei {f.teacher}</span>
+            {f.isNew && <span class="tag tag--new">Neu</span>}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="news-head">
+        <div>
+          <p class="eyebrow">Aus der Schule</p>
+          <h2 class="display sec-title">News</h2>
+        </div>
+        <a href="/news/" class="btn btn--ghost">Alle News</a>
+      </div>
+      <div class="grid grid--3">
+        {news.map((n) => (
+          <a class="card post" href={`/news/${n.id}/`}>
+            <p class="post__date text-muted">{fmt.format(n.data.date)}</p>
+            <h3 class="post__title">{n.data.title}</h3>
+            <p class="text-muted">{n.data.summary}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section cta-band">
+    <div class="wrap-narrow" style="text-align: center;">
+      <h2 class="display cta-band__title">Einfach mal ausprobieren</h2>
+      <p class="sec-lead text-muted" style="margin-inline: auto;">
+        Die erste Stunde ist zum Reinschnuppern da. Schreib uns, welcher Kurs dich interessiert —
+        wir melden uns mit einem Termin.
+      </p>
+      <div class="cluster" style="justify-content: center; margin-top: 2rem;">
+        <a href="/probestunde/" class="btn">Probestunde buchen</a>
+        <a href={`tel:${site.phone}`} class="btn btn--ghost">{site.phoneDisplay}</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero { position: relative; padding-block: clamp(3.5rem, 11vw, 9rem) clamp(3rem, 8vw, 6rem); overflow: hidden; }
+  .hero__glow {
+    position: absolute; inset: -30% 0 auto 0; height: 90%;
+    background:
+      radial-gradient(50% 60% at 20% 30%, color-mix(in oklab, var(--hot) 30%, transparent), transparent 70%),
+      radial-gradient(45% 55% at 80% 20%, color-mix(in oklab, var(--electric) 18%, transparent), transparent 70%);
+    filter: blur(30px); pointer-events: none;
+  }
+  .hero__inner { position: relative; }
+  .hero__title { font-size: var(--step-5); margin-block: 0.6rem 1.4rem; }
+  .hero__accent { color: var(--hot); }
+  .hero__lead { font-size: var(--step-1); max-width: 46ch; color: var(--fg-muted); }
+  .hero__cta { margin-top: 2rem; }
+
+  .stats {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 1.5rem; margin-top: clamp(2.5rem, 6vw, 4.5rem);
+    padding-top: 2rem; border-top: 1px solid var(--line);
+  }
+  .stats dt { font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--fg-muted); font-weight: 700; }
+  .stats dd { font-size: var(--step-3); margin: 0.2rem 0 0; }
+
+  .sec-title { font-size: var(--step-3); margin-block: 0.4rem 0.8rem; }
+  .sec-lead { max-width: 52ch; margin-bottom: 2.5rem; }
+
+  .loc { padding: 1.8rem; border: 1px solid var(--line-light); border-radius: var(--radius); background: #fff; }
+  .loc__name { font-size: var(--step-2); color: color-mix(in oklab, var(--hot) 85%, black); }
+  .loc__addr { font-weight: 600; margin-block: 0.4rem 0.8rem; }
+
+  .disc-head {
+    display: flex; align-items: center; gap: 0.7rem;
+    font-size: var(--step-1); margin-block: 3rem 1.5rem;
+  }
+  .disc-head:first-of-type { margin-top: 0; }
+  .disc-dot { width: 0.7rem; height: 0.7rem; border-radius: 50%; }
+  .disc-dot--tanz { background: var(--hot); }
+  .disc-dot--art { background: var(--amber); }
+
+  .course { padding: 1.5rem; text-decoration: none; }
+  .course__title { font-size: var(--step-1); }
+  .course__ages { font-size: var(--step--1); margin-block: 0.3rem 0.7rem; }
+  .course__sum { font-size: var(--step--1); color: var(--fg-muted); }
+
+  .free { display: grid; gap: clamp(2rem, 5vw, 4rem); align-items: start; }
+  @media (min-width: 860px) { .free { grid-template-columns: 1fr 1.1fr; } }
+  .free__list { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.9rem; }
+  .free__list li {
+    display: flex; flex-wrap: wrap; gap: 0.5rem 0.9rem; align-items: baseline;
+    padding: 1rem 1.2rem; background: #fff; border: 1px solid var(--line-light); border-radius: 10px;
+  }
+  .free__list strong { flex: 1 1 auto; }
+  .tag--new { color: color-mix(in oklab, var(--hot) 85%, black); }
+
+  .news-head { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; align-items: end; margin-bottom: 2.5rem; }
+  .post { padding: 1.5rem; text-decoration: none; }
+  .post__date { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; }
+  .post__title { font-size: var(--step-1); margin-block: 0.5rem 0.6rem; }
+
+  .cta-band { background: linear-gradient(160deg, var(--ink-2), var(--ink)); border-top: 1px solid var(--line); }
+  .cta-band__title { font-size: var(--step-4); margin-bottom: 1rem; }
+</style>
