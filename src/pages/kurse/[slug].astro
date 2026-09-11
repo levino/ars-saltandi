@@ -111,7 +111,7 @@ const openSlots = courseSlots.filter((s) => !s.selectionOnly && !s.internal)
 
 <style>
   .crumbs { font-size: var(--step--1); margin-bottom: 1.5rem; }
-  .crumbs a { color: var(--accent); }
+  .crumbs a:not(.btn) { color: var(--accent); }
 
   .page-head { margin-bottom: 3rem; }
   .page-title { font-size: var(--step-4); margin-block: 0.4rem 1rem; }
@@ -120,6 +120,7 @@ const openSlots = courseSlots.filter((s) => !s.selectionOnly && !s.internal)
   .page-img {
     width: 100%; aspect-ratio: 16 / 9; object-fit: cover;
     border-radius: var(--radius); margin-top: 2rem;
+    background: var(--paper-2); border: 1px solid var(--line);
   }
   .facts {
     display: flex; flex-wrap: wrap; gap: 2rem;
@@ -137,7 +138,7 @@ const openSlots = courseSlots.filter((s) => !s.selectionOnly && !s.internal)
   .panel { padding: 1.5rem; background: var(--ink-2); border: 1px solid var(--line); border-radius: var(--radius); }
   .panel--cta { background: linear-gradient(160deg, color-mix(in oklab, var(--accent) 18%, var(--ink-2)), var(--ink-2)); }
   .panel--cta .btn { margin-top: 1rem; }
-  .panel__h { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+  .panel__h { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-text); margin-bottom: 1rem; }
   .panel__link { display: inline-block; margin-top: 1.1rem; font-size: var(--step--1); color: var(--accent); text-decoration: none; }
   .panel__link:hover { text-decoration: underline; }
 

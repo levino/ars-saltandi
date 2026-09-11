@@ -78,15 +78,22 @@ const groups = [
   .page-head { margin-bottom: 3rem; }
   .page-title { font-size: var(--step-4); margin-block: 0.4rem 1rem; }
   .page-lead { font-size: var(--step-1); max-width: 56ch; }
-  .page-lead a { color: var(--accent); }
+  .page-lead a:not(.btn) { color: var(--accent); }
 
   .disc + .disc { margin-top: clamp(3rem, 7vw, 5rem); }
   .disc__head { margin-bottom: 1.8rem; }
-  .disc__title { font-size: var(--step-2); color: var(--accent); }
+  .disc__title { font-size: var(--step-2); color: var(--accent-text); }
   .disc__hint { font-size: var(--step--1); margin-top: 0.3rem; }
 
   .course { text-decoration: none; overflow: hidden; }
-  .course__img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+  /* Viele Studiofotos sind vor weißem Hintergrund aufgenommen. Auf der
+     hellen Seite brauchen sie eine eigene Fläche und eine Kante, sonst
+     verschwimmen sie mit der Karte. */
+  .course__img {
+    width: 100%; aspect-ratio: 4 / 3; object-fit: cover;
+    background: var(--paper-2);
+    border-bottom: 1px solid var(--line);
+  }
   .course__img--none {
     display: grid; place-items: center;
     background: repeating-linear-gradient(135deg, var(--ink-2) 0 14px, var(--ink-3) 14px 28px);

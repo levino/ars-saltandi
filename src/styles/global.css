@@ -15,36 +15,47 @@
 @layer base {
   :root {
     /* ── Corporate Identity ────────────────────────────────────────────
-       Aus Logo und Druckstücken abgenommen:
-       · Markenschwarz  #241f21  (Wortmarke "ARS SALTANDI")
-       · Signalrot      #ff0000  (Level-Markierungen im Stundenplan)
-       · Weiß
-       Mehr Farben hat die CI nicht — alles Weitere sind Abstufungen
-       desselben Schwarz. Die Farbigkeit kommt aus den Fotos.            */
+       Abgenommen von der bestehenden Website (gerendert gemessen) und
+       aus der globalen Farbpalette des Elementor-Kits:
 
-    --ink:        #241f21;   /* Markenschwarz */
-    --ink-2:      #2e2829;   /* eine Stufe heller, für Flächen */
-    --ink-3:      #3a3335;   /* Hover, Rahmen */
-    --paper:      #f6f4f1;
-    --paper-2:    #e8e4df;
+         Kopfbereich   linear-gradient(#0F55CF, #000000 61%)
+         Buttons       #BF1A49
+         Links         #CC3366
+         Seite         Weiß, Text #333333
 
-    --fg:         #f6f4f1;
-    --fg-muted:   #a9a19f;
-    --fg-on-light:        #241f21;
-    --fg-on-light-muted:  #605759;
+       Die Seite ist hell. Blau trägt die Struktur (Kopf, Fuß),
+       Himbeer ist die Handlungsfarbe.                                   */
 
-    /* Signalrot. Für kleinen Text auf Weiß ist reines #ff0000 zu
-       kontrastarm — dafür die abgedunkelte Variante. */
-    --accent:        #ff0000;
-    --accent-on-light: #d10000;
+    --blue:        #0f55cf;
+    --blue-deep:   #06246b;
+    --accent:      #bf1a49;   /* Himbeer — Buttons, Akzente */
+    --accent-dark: #9d1139;   /* Hover */
+    --accent-link: #cc3366;   /* Links im Fließtext */
+    --accent-bright: #ff7ba3; /* Himbeer aufgehellt — nur auf dunklem Grund lesbar */
+
+    /* Textakzent getrennt von der Flächenfarbe: Buttons behalten das
+       kräftige Himbeer, Akzenttext wird auf dunklem Grund aufgehellt. */
+    --accent-text: var(--accent);
+
+    /* Flächen und Text — helle Seite */
+    --ink:        #ffffff;    /* Seitengrund */
+    --ink-2:      #f5f4f2;    /* Karten, Panels */
+    --ink-3:      #e9e7e4;    /* Hover */
+    --paper:      #f5f4f2;    /* abgesetztes Band */
+    --paper-2:    #e9e7e4;
+
+    --fg:                #1c1c1c;
+    --fg-muted:          #56545a;
+    --fg-on-light:       #1c1c1c;
+    --fg-on-light-muted: #56545a;
 
     --line:       color-mix(in oklab, var(--fg) 16%, transparent);
-    --line-light: color-mix(in oklab, var(--fg-on-light) 16%, transparent);
+    --line-light: color-mix(in oklab, var(--fg) 16%, transparent);
 
     --font-display: 'Oswald', 'Haettenschweiler', 'Arial Narrow', system-ui, sans-serif;
     --font-body: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 
-    --step--1: clamp(0.83rem, 0.8rem + 0.15vw, 0.92rem);
+    --step--1: clamp(0.85rem, 0.82rem + 0.15vw, 0.95rem);
     --step-0:  clamp(1rem, 0.96rem + 0.2vw, 1.12rem);
     --step-1:  clamp(1.3rem, 1.2rem + 0.5vw, 1.6rem);
     --step-2:  clamp(1.7rem, 1.45rem + 1.2vw, 2.4rem);
@@ -54,9 +65,9 @@
 
     --gutter: clamp(1.1rem, 4vw, 3rem);
     --measure: 62ch;
-    --radius: 4px;   /* die CI ist kantig, nicht verspielt */
+    --radius: 3px;   /* wie die Buttons der bisherigen Seite */
 
-    color-scheme: dark;
+    color-scheme: light;
   }
 
   /* `clip` statt `hidden`: verhindert seitliches Scrollen, ohne einen
@@ -103,7 +114,7 @@
     text-transform: uppercase;
     letter-spacing: 0.18em;
     font-weight: 700;
-    color: var(--accent);
+    color: var(--accent-text);
   }
 
   /* Buttons */
@@ -112,21 +123,39 @@
     display: inline-flex; align-items: center; gap: 0.6em;
     padding: 0.85em 1.5em;
     background: var(--btn-bg); color: var(--btn-fg);
-    border: 2px solid var(--btn-bg); border-radius: 999px;
+    border: 2px solid var(--btn-bg); border-radius: var(--radius);
     font-weight: 700; font-size: var(--step--1);
     letter-spacing: 0.08em; text-transform: uppercase;
     text-decoration: none; cursor: pointer;
     transition: transform 0.18s cubic-bezier(.2,.8,.2,1), background 0.18s, color 0.18s;
   }
-  .btn:hover { transform: translateY(-2px) scale(1.02); }
-  .btn--ghost { --btn-bg: transparent; --btn-fg: var(--fg); border-color: var(--line); }
+  .btn:hover { transform: translateY(-2px); background: var(--accent-dark); border-color: var(--accent-dark); }
+  .btn--ghost:hover { background: transparent; }
+  .btn--ghost { --btn-bg: transparent; --btn-fg: var(--fg); border-color: color-mix(in oklab, var(--fg) 35%, transparent); }
   .btn--ghost:hover { border-color: var(--fg); }
   .btn--light { --btn-bg: var(--fg-on-light); --btn-fg: var(--paper); }
 
   /* Sections */
   .section { padding-block: clamp(3.5rem, 9vw, 8rem); }
-  .section--light { background: var(--paper); color: var(--fg-on-light); }
-  .section--light .eyebrow { color: color-mix(in oklab, var(--accent) 85%, black); }
+  .section--light { background: var(--paper); }
+
+  /* Umkehrung für dunkle Bänder (Kopf, Fuß, Hero-Abschluss).
+     Alle Tokens lokal neu setzen, damit Komponenten unverändert
+     funktionieren — sie lesen nur die Variablen. */
+  .on-dark, .section--dark {
+    --accent-text: var(--accent-bright);
+    --ink:   #0d0d10;
+    --ink-2: #16161b;
+    --ink-3: #212129;
+    --fg:                #ffffff;
+    --fg-muted:          #b9b6bf;
+    --fg-on-light:       #ffffff;
+    --fg-on-light-muted: #b9b6bf;
+    --line:  color-mix(in oklab, #ffffff 22%, transparent);
+    --line-light: color-mix(in oklab, #ffffff 22%, transparent);
+    background-color: var(--ink);
+    color: var(--fg);
+  }
 
   .rule { height: 1px; background: var(--line); border: 0; }
 
@@ -139,7 +168,11 @@
     overflow: hidden;
     transition: transform 0.2s cubic-bezier(.2,.8,.2,1), border-color 0.2s;
   }
-  .card:hover { transform: translateY(-4px); border-color: color-mix(in oklab, var(--accent) 60%, transparent); }
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent);
+    box-shadow: 0 10px 28px color-mix(in oklab, var(--fg) 12%, transparent);
+  }
 
   .grid { display: grid; gap: clamp(1rem, 2.5vw, 1.8rem); }
   .grid--3 { grid-template-columns: repeat(auto-fill, minmax(min(100%, 290px), 1fr)); }
@@ -150,8 +183,8 @@
   .prose h2 { font-size: var(--step-2); margin-top: 1.8em; }
   .prose h3 { font-size: var(--step-1); margin-top: 1.6em; }
   .prose ul, .prose ol { padding-left: 1.3em; }
-  .prose a { color: var(--accent); }
-  .section--light .prose a { color: color-mix(in oklab, var(--accent) 85%, black); }
+  .prose a { color: var(--accent-link); }
+  .on-dark .prose a, .section--dark .prose a { color: #ff9ec0; }
 
   .tag {
     display: inline-block; padding: 0.25em 0.7em;
@@ -159,9 +192,10 @@
     font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700;
   }
   .tag--level0 { color: var(--fg-muted); }
-  .tag--level1 { color: var(--fg); }
-  .tag--level2 { color: color-mix(in oklab, var(--accent) 70%, var(--fg)); }
+  .tag--level1 { color: var(--blue); }
+  .tag--level2 { color: color-mix(in oklab, var(--accent) 70%, var(--blue)); }
   .tag--level3 { color: var(--accent); }
+  .on-dark .tag--level1 { color: #8ab4ff; }
 }
 
 @layer utilities {

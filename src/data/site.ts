@@ -7,7 +7,6 @@ export const site = {
   phone: '+49 5121 2065646',
   phoneDisplay: '05121 – 206 56 46',
   instagram: 'https://www.instagram.com/arssaltandi/',
-  betterplace: 'https://www.betterplace.org/de/organisations/46283-ars-saltandi-e-v',
   shop: 'https://shop-ars-saltandi.arminasi.de/',
   newsletterAction:
     'https://bef57f2f.sibforms.com/serve/MUIEACVAiUIY93WhWtDsllFJbgw4SNBgaowBEVpuEV_v_tZGRNVhXPzmZ2_pshXMTZGtIAXhPHPS_2OZLOaBGan05laKUz__oKNGF3mX0iOlCnFHGfSU1zBL1g2Szab-WCDGoHZ6hlBXF8nn8kBdCq8C_O78ROQFS585GJslMJtx4J7AhYywS8v3qyRwE_TFXIvx0l742Z0Vz0Cb',

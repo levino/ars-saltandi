@@ -109,19 +109,28 @@ online gehen.
 
 ## Gestaltung
 
-Die Website folgt der bestehenden CI der Schule, nicht einer neuen:
+Die Farben sind von der bestehenden Website abgenommen — gerendert gemessen und
+mit der globalen Farbpalette des Elementor-Kits abgeglichen, nicht neu erfunden:
 
-- **Markenschwarz `#241f21`** — aus der Wortmarke abgenommen
-- **Signalrot `#ff0000`** — wie die Level-Markierungen im gedruckten Stundenplan
-- **Weiß**
+| Rolle | Wert | Herkunft |
+|---|---|---|
+| Kopf- und Fußbereich | Verlauf `#0F55CF` → Schwarz | Kopfleiste der bisherigen Seite |
+| Handlungsfarbe (Buttons) | `#BF1A49` | Button „Finde Deinen Kurs" |
+| Links im Fließtext | `#CC3366` | Linkfarbe der bisherigen Seite |
+| Seite | Weiß, Text `#1c1c1c` | Seitengrund der bisherigen Seite |
 
-Mehr Farben hat die CI nicht; alles Weitere sind Abstufungen desselben Schwarz. Die
-Farbigkeit kommt aus den Fotos. Die Tokens stehen gesammelt oben in
-`src/styles/global.css`.
+Die Seite ist hell. Blau trägt die Struktur, Himbeer die Handlung. Für dunkle
+Bänder (Hero, Fuß) gibt es die Klasse `.on-dark`: sie setzt alle Farb-Tokens
+lokal um, Komponenten funktionieren darin unverändert. Weil `#BF1A49` auf
+Schwarz zu dunkel ist, wird Akzent**text** dort über `--accent-text`
+aufgehellt — die Button**flächen** bleiben im kräftigen Himbeer.
 
-Logo, Signet und die Logos der Teilbereiche (Dance & Drama School, Moving Arts,
-Company, e.V.) liegen in `src/assets/brand/`. Die Schrift **Oswald** wird unter
-`public/fonts/` selbst ausgeliefert — es gehen keine Daten an Google.
+Alle Texte der Website erfüllen WCAG AA; das ist mit einem Kontrastmesser über
+alle 18 Seiten geprüft.
+
+Logo, Signet und die Logos der Teilbereiche liegen in `src/assets/brand/`. Die
+Schrift **Oswald** wird unter `public/fonts/` selbst ausgeliefert — es gehen
+keine Daten an Google.
 
 ### Ein Foto austauschen
 
