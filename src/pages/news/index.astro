@@ -1,0 +1,55 @@
+---
+import Base from '../../layouts/Base.astro'
+import { getCollection } from 'astro:content'
+
+const posts = (await getCollection('news', (n) => !n.data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+)
+const fmt = new Intl.DateTimeFormat('de-DE', { day: '2-digit', month: 'long', year: 'numeric' })
+const KIND: Record<string, string> = {
+  news: 'News', erfolg: 'Erfolg', auftritt: 'Auftritt', kurs: 'Neuer Kurs',
+}
+---
+
+<Base title="News" description="Auftritte, Erfolge und Neuigkeiten aus der ARS SALTANDI.">
+  <div class="wrap">
+    <header class="page-head">
+      <p class="eyebrow">Aus der Schule</p>
+      <h1 class="display page-title">News</h1>
+      <p class="page-lead text-muted">Auftritte, Wettkämpfe, neue Kurse — was bei uns passiert.</p>
+    </header>
+
+    <div class="posts">
+      {posts.map((p) => (
+        <a class="post" href={`/news/${p.id}/`}>
+          <div class="post__meta">
+            <time datetime={p.data.date.toISOString()}>{fmt.format(p.data.date)}</time>
+            <span class="tag tag--kind">{KIND[p.data.kind]}</span>
+          </div>
+          <div>
+            <h2 class="post__title">{p.data.title}</h2>
+            <p class="text-muted">{p.data.summary}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</Base>
+
+<style>
+  .page-head { margin-bottom: 3rem; }
+  .page-title { font-size: var(--step-4); margin-block: 0.4rem 1rem; }
+  .page-lead { font-size: var(--step-1); max-width: 56ch; }
+
+  .posts { display: grid; margin-bottom: 5rem; }
+  .post {
+    display: grid; gap: 0.6rem 3rem; align-items: start;
+    padding-block: clamp(1.5rem, 3.5vw, 2.2rem); border-top: 1px solid var(--line);
+    text-decoration: none; transition: background 0.15s;
+  }
+  @media (min-width: 780px) { .post { grid-template-columns: 14rem minmax(0, 1fr); } }
+  .post:hover { background: var(--ink-2); }
+  .post__meta { display: flex; flex-wrap: wrap; gap: 0.7rem; align-items: center; font-size: var(--step--1); color: var(--fg-muted); }
+  .post__title { font-size: var(--step-2); margin-bottom: 0.5rem; }
+  .tag--kind { color: var(--amber); }
+</style>

@@ -1,0 +1,15 @@
+# Freie Plätze / neue Kurse — aus dem Stundenplan-PDF.
+# Erscheint auf der Startseite. Leere Liste = Abschnitt wird ausgeblendet.
+
+spots:
+  - teacher: Karen
+    text: "Modern Tap, montags 17:00-18:00 Uhr"
+  - teacher: Katrin
+    text: "Bühnenpräsenz, montags 18:15-19:15 Uhr"
+  - teacher: Pia
+    text: "ARS SALTANDI (ab 10), dienstags 17:00-18:00 Uhr"
+  - teacher: Christine
+    text: "ARS SALTANDI (ab 10), freitags 15:00-16:00 Uhr"
+    isNew: true
+  - teacher: Jolanda
+    text: "Artistik Level 0 + 1, dienstags 15:00-16:00 Uhr"

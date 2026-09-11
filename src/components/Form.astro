@@ -1,0 +1,108 @@
+---
+/**
+ * Formular ohne eigenen Server.
+ *
+ * Ziel ist der Cloudflare-Worker unter /api/form (siehe worker/index.ts).
+ * Die Website selbst bleibt komplett statisch — der Worker läuft nur für
+ * diesen einen Pfad und schickt die Eingaben per Brevo an die Schule.
+ *
+ * Ohne JavaScript funktioniert das Formular als normales HTML-POST mit
+ * Redirect auf /danke/. Mit JavaScript wird abgesendet, ohne die Seite zu
+ * verlassen — der Rest ist identisch.
+ */
+interface Props {
+  name: string
+  subject: string
+  submitLabel?: string
+}
+
+const { name, subject, submitLabel = 'Absenden' } = Astro.props
+const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT || '/api/form'
+---
+
+<form class="frm" method="post" action={endpoint} data-form>
+  <input type="hidden" name="_subject" value={subject} />
+  <input type="hidden" name="_form" value={name} />
+  <!-- Honeypot gegen Bots: für Menschen unsichtbar, für Bots verlockend -->
+  <p class="visually-hidden" aria-hidden="true">
+    <label>Bitte leer lassen<input type="text" name="_gotcha" tabindex="-1" autocomplete="off" /></label>
+  </p>
+
+  <slot />
+
+  <div class="frm__foot">
+    <label class="frm__check">
+      <input type="checkbox" name="datenschutz" required />
+      <span>
+        Ich habe die <a href="/datenschutz/">Datenschutzerklärung</a> gelesen und bin damit
+        einverstanden, dass meine Angaben zur Bearbeitung meiner Anfrage gespeichert werden.
+      </span>
+    </label>
+    <button type="submit" class="btn">{submitLabel}</button>
+  </div>
+
+  <p class="frm__status" data-status role="status" aria-live="polite" hidden></p>
+</form>
+
+<script>
+  for (const form of document.querySelectorAll<HTMLFormElement>('form[data-form]')) {
+    form.addEventListener('submit', async (event) => {
+      // Ohne JS bleibt es beim normalen POST + Redirect — deshalb nur hier abfangen.
+      event.preventDefault()
+      const status = form.querySelector<HTMLElement>('[data-status]')!
+      const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!
+
+      const show = (text: string, state: string) => {
+        status.textContent = text
+        status.dataset.state = state
+        status.hidden = false
+      }
+
+      button.disabled = true
+      show('Wird gesendet …', 'sending')
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { accept: 'application/json' },
+        })
+        if (!response.ok && response.type !== 'opaqueredirect') throw new Error(String(response.status))
+        location.assign('/danke/')
+      } catch {
+        button.disabled = false
+        show(
+          'Das hat leider nicht geklappt. Bitte versuch es erneut oder schreib uns direkt an info@arssaltandi.de.',
+          'error',
+        )
+      }
+    })
+  }
+</script>
+
+<style>
+  .frm { display: grid; gap: 1.2rem; }
+  .frm :global(.field) { display: grid; gap: 0.4rem; }
+  .frm :global(.field__label) {
+    font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--fg-muted); font-weight: 700;
+  }
+  .frm :global(.field input),
+  .frm :global(.field select),
+  .frm :global(.field textarea) {
+    padding: 0.75em 0.9em; background: var(--ink); color: var(--fg);
+    border: 1px solid var(--line); border-radius: 8px; width: 100%;
+  }
+  .frm :global(.field textarea) { min-height: 8rem; resize: vertical; }
+  .frm :global(.field input:required:invalid:not(:placeholder-shown)) { border-color: var(--hot); }
+  .frm :global(.row) { display: grid; gap: 1.2rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); }
+
+  .frm__foot { display: grid; gap: 1.2rem; margin-top: 0.5rem; }
+  .frm__check { display: flex; gap: 0.7rem; align-items: start; font-size: var(--step--1); color: var(--fg-muted); }
+  .frm__check input { margin-top: 0.25em; flex: none; width: 1.1rem; height: 1.1rem; accent-color: var(--hot); }
+  .frm__check a { color: var(--hot); }
+  .frm__foot .btn { justify-self: start; }
+  .frm__status { font-size: var(--step--1); padding: 0.9rem 1.1rem; border-radius: 8px; }
+  .frm__status[data-state='error'] { border: 1px solid var(--hot); color: var(--hot); }
+  .frm__status[data-state='sending'] { border: 1px solid var(--line); color: var(--fg-muted); }
+</style>

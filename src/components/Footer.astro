@@ -1,0 +1,93 @@
+---
+import { site, locations } from '../data/site'
+---
+
+<footer class="ftr">
+  <div class="wrap">
+    <div class="ftr__top">
+      <div>
+        <p class="display ftr__claim">Komm vorbei<br />und probier es aus.</p>
+        <a href="/probestunde/" class="btn">Probestunde buchen</a>
+      </div>
+
+      <div class="ftr__cols">
+        <div>
+          <h2 class="ftr__h">Kurse</h2>
+          <ul>
+            <li><a href="/kurse/">Alle Kurse</a></li>
+            <li><a href="/stundenplan/">Stundenplan</a></li>
+            <li><a href="/preise/">Preise</a></li>
+            <li><a href="/anmeldung/">Anmeldung</a></li>
+            <li><a href="/probestunde/">Probestunde</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="ftr__h">Schule</h2>
+          <ul>
+            <li><a href="/team/">Unser Team</a></li>
+            <li><a href="/company/">Company</a></li>
+            <li><a href="/foerdersystem/">Fördersystem</a></li>
+            <li><a href="/verein/">Ars Saltandi e.V.</a></li>
+            <li><a href="/fsj/">FSJ Kultur</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="ftr__h">Mehr</h2>
+          <ul>
+            <li><a href="/news/">News</a></li>
+            <li><a href={site.instagram} rel="me noopener">Instagram</a></li>
+            <li><a href={site.shop} rel="noopener">Shop</a></li>
+            <li><a href={site.betterplace} rel="noopener">Spenden</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <hr class="rule" />
+
+    <div class="ftr__locs">
+      {locations.map((l) => (
+        <div>
+          <h2 class="ftr__h">{l.name}</h2>
+          <p class="text-muted">{l.street}<br />{l.city}</p>
+        </div>
+      ))}
+      <div>
+        <h2 class="ftr__h">Kontakt</h2>
+        <p class="text-muted">
+          <a href={`tel:${site.phone}`}>{site.phoneDisplay}</a><br />
+          <a href={`mailto:${site.email}`}>{site.email}</a>
+        </p>
+      </div>
+    </div>
+
+    <hr class="rule" />
+
+    <div class="ftr__legal">
+      <p class="text-muted">© {new Date().getFullYear()} ARS SALTANDI e.V.</p>
+      <ul>
+        <li><a href="/impressum/">Impressum</a></li>
+        <li><a href="/datenschutz/">Datenschutz</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .ftr { border-top: 1px solid var(--line); padding-block: clamp(2.5rem, 6vw, 5rem) 2rem; background: var(--ink-2); }
+  .ftr__top { display: grid; gap: clamp(2rem, 5vw, 4rem); grid-template-columns: 1fr; margin-bottom: 2.5rem; }
+  @media (min-width: 800px) { .ftr__top { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); } }
+
+  .ftr__claim { font-size: var(--step-3); margin-bottom: 1.4rem; }
+  .ftr__cols { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+  .ftr__h { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--hot); margin-bottom: 0.9rem; font-weight: 700; }
+  .ftr ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.5rem; }
+  .ftr a { color: var(--fg-muted); text-decoration: none; font-size: var(--step--1); }
+  .ftr a:hover { color: var(--fg); text-decoration: underline; }
+
+  .ftr__locs { display: grid; gap: 1.8rem; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); padding-block: 2rem; }
+  .ftr__locs p { font-size: var(--step--1); line-height: 1.7; }
+
+  .ftr__legal { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; padding-top: 1.5rem; font-size: var(--step--1); }
+  .ftr__legal ul { display: flex; gap: 1.2rem; }
+</style>

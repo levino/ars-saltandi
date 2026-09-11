@@ -1,0 +1,67 @@
+---
+import '../styles/global.css'
+import Header from '../components/Header.astro'
+import Footer from '../components/Footer.astro'
+import { site } from '../data/site'
+
+interface Props {
+  title?: string
+  description?: string
+  /** Kein Seitenabstand oben – für Seiten mit eigenem Hero */
+  bleed?: boolean
+}
+
+const { title, description = site.description, bleed = false } = Astro.props
+const fullTitle = title ? `${title} — ${site.name}` : `${site.name} — ${site.tagline}`
+const canonical = new URL(Astro.url.pathname, Astro.site)
+---
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="de_DE" />
+    <meta property="og:site_name" content={site.name} />
+    <meta name="theme-color" content="#0a0a12" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap"
+    />
+  </head>
+  <body>
+    <a href="#main" class="skip">Zum Inhalt springen</a>
+    <Header />
+    <main id="main" class:list={[!bleed && 'main-pad']}>
+      <slot />
+    </main>
+    <Footer />
+    <style>
+      .skip {
+        position: absolute;
+        left: 50%;
+        top: 0;
+        translate: -50% -120%;
+        z-index: 100;
+        background: var(--hot);
+        color: #fff;
+        padding: 0.7em 1.2em;
+        border-radius: 0 0 8px 8px;
+        font-weight: 700;
+        text-decoration: none;
+        transition: translate 0.2s;
+      }
+      .skip:focus { translate: -50% 0; }
+      .main-pad { padding-top: clamp(2.5rem, 6vw, 5rem); }
+    </style>
+  </body>
+</html>

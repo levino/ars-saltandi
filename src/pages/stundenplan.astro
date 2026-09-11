@@ -1,0 +1,87 @@
+---
+import Base from '../layouts/Base.astro'
+import Schedule from '../components/Schedule.astro'
+import { locations } from '../data/site'
+import { LEVEL_LABELS } from '../lib/schedule'
+---
+
+<Base
+  title="Stundenplan"
+  description="Der komplette Wochenplan der ARS SALTANDI Tanz- und Artistikschule Hildesheim — filterbar nach Kurs, Dozent:in und Level."
+>
+  <div class="wrap">
+    <header class="page-head">
+      <p class="eyebrow">Wochenplan</p>
+      <h1 class="display page-title">Stundenplan</h1>
+      <p class="page-lead text-muted">
+        Alle Kurstermine der Woche — such nach einem Kurs, filter nach Dozent:in oder Level.
+        Änderungen pflegen wir direkt hier ein, es gibt kein PDF mehr zum Suchen.
+      </p>
+    </header>
+
+    <Schedule />
+
+    <section class="legend">
+      <div>
+        <h2 class="legend__h">Level</h2>
+        <ul>
+          {Object.entries(LEVEL_LABELS).map(([k, v]) => (
+            <li><span class={`tag tag--level${k}`}>Level {k}</span> {v}</li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <h2 class="legend__h">Hinweise</h2>
+        <ul>
+          <li><span class="tag tag--sel">Nach Auswahl</span> Leistungsgruppe des Fördersystems — Teilnahme nach Auswahl</li>
+          <li><span class="tag tag--sel">Intern</span> interne Gruppe, keine offene Anmeldung</li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="legend__h">Studios</h2>
+        <ul>
+          {locations.map((l) => (
+            <li><strong>{l.name}</strong> — {l.street}, {l.city}</li>
+          ))}
+        </ul>
+        <p class="text-muted legend__note">
+          Die Moving-Arts-Kurse (Vertikaltuch, Trapez, Rhönrad, Cyr Wheel, Akrobatik, Airtrack)
+          finden in der Carl-Zeiss-Straße 18a statt.
+        </p>
+      </div>
+    </section>
+
+    <aside class="cta-box">
+      <h2 class="display cta-box__title">Passt nichts? Ruf uns an.</h2>
+      <p class="text-muted">
+        Wir finden fast immer einen Kurs, der passt — und wenn nicht, setzen wir dich auf die Warteliste.
+      </p>
+      <div class="cluster" style="margin-top: 1.4rem;">
+        <a href="/probestunde/" class="btn">Probestunde buchen</a>
+        <a href="/preise/" class="btn btn--ghost">Preise ansehen</a>
+      </div>
+    </aside>
+  </div>
+</Base>
+
+<style>
+  .page-head { margin-bottom: 2.5rem; }
+  .page-title { font-size: var(--step-4); margin-block: 0.4rem 1rem; }
+  .page-lead { font-size: var(--step-1); max-width: 56ch; }
+
+  .legend {
+    display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+    margin-top: clamp(3rem, 7vw, 5rem); padding-top: 2.5rem; border-top: 1px solid var(--line);
+  }
+  .legend__h { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--hot); margin-bottom: 1rem; }
+  .legend ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.7rem; font-size: var(--step--1); }
+  .legend li { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: baseline; }
+  .legend__note { margin-top: 0.9rem; font-size: var(--step--1); }
+
+  .cta-box {
+    margin-block: clamp(3rem, 7vw, 5rem);
+    padding: clamp(1.8rem, 4vw, 3rem);
+    background: var(--ink-2); border: 1px solid var(--line); border-radius: var(--radius);
+  }
+  .cta-box__title { font-size: var(--step-2); margin-bottom: 0.7rem; }
+</style>

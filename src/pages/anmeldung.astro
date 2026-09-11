@@ -1,0 +1,117 @@
+---
+import Base from '../layouts/Base.astro'
+import { site } from '../data/site'
+---
+
+<Base
+  title="Anmeldung"
+  description="So meldest du dich zu einem Kurs der ARS SALTANDI in Hildesheim an — Schritt für Schritt."
+>
+  <div class="wrap">
+    <header class="page-head">
+      <p class="eyebrow">So geht's</p>
+      <h1 class="display page-title">Anmeldung</h1>
+      <p class="page-lead text-muted">
+        Schön, dass du bei uns tanzen möchtest. In drei Schritten bist du dabei.
+      </p>
+    </header>
+
+    <ol class="steps">
+      <li>
+        <span class="steps__n display">1</span>
+        <div>
+          <h2 class="steps__h">Kurs aussuchen</h2>
+          <p class="text-muted">
+            Im <a href="/stundenplan/">Stundenplan</a> siehst du alle Termine der Woche, in der
+            <a href="/kurse/">Kursübersicht</a> steht, was in den einzelnen Kursen passiert.
+            Unsicher? Der <a href="/kurse/ars-saltandi/">ARS-SALTANDI-Kurs</a> ist der beste Einstieg.
+          </p>
+        </div>
+      </li>
+      <li>
+        <span class="steps__n display">2</span>
+        <div>
+          <h2 class="steps__h">Probestunde machen</h2>
+          <p class="text-muted">
+            Die erste Stunde ist zum Ausprobieren da — kostenlos und unverbindlich.
+            <a href="/probestunde/">Termin anfragen</a>, wir melden uns mit einem Vorschlag.
+          </p>
+        </div>
+      </li>
+      <li>
+        <span class="steps__n display">3</span>
+        <div>
+          <h2 class="steps__h">Anmeldung abgeben</h2>
+          <p class="text-muted">
+            Passt der Kurs, füllst du das Anmeldeformular aus. Du bekommst es in der
+            Probestunde ausgehändigt — oder wir schicken es dir vorab per Mail zu.
+          </p>
+          <p class="cluster" style="margin-top: 1rem;">
+            <a href={`mailto:${site.email}?subject=${encodeURIComponent('Anmeldeformular anfordern')}`} class="btn">
+              Formular anfordern
+            </a>
+          </p>
+        </div>
+      </li>
+    </ol>
+
+    <section class="faq">
+      <h2 class="display faq__h">Häufige Fragen</h2>
+      <div class="faq__list">
+        <details>
+          <summary>Ab wann kann mein Kind mitmachen?</summary>
+          <p>Ab 3,5 Jahren im <a href="/kurse/kreativer-tanz/">Kreativen Tanz</a>. Ab 5 Jahren geht es im ARS-SALTANDI-Kurs weiter.</p>
+        </details>
+        <details>
+          <summary>Kann man mitten im Jahr einsteigen?</summary>
+          <p>In den meisten Kursen ja. Ruf uns an, dann sagen wir dir, wo gerade Platz ist — die aktuell freien Plätze stehen auch auf der <a href="/">Startseite</a>.</p>
+        </details>
+        <details>
+          <summary>Was kostet ein Kurs?</summary>
+          <p>Zwischen 30 und 37 € pro Monat, ab dem zweiten Kurs deutlich weniger. Alle Details auf der <a href="/preise/">Preisseite</a>.</p>
+        </details>
+        <details>
+          <summary>Was ziehe ich an?</summary>
+          <p>Bequeme Sportkleidung. Für Tanzkurse Socken oder Schläppchen, für Artistikkurse ein eng anliegendes Oberteil, das die Achseln bedeckt.</p>
+        </details>
+        <details>
+          <summary>Wie lange läuft der Vertrag?</summary>
+          <p>Die Kursgebühr wird monatlich abgebucht. Die genauen Teilnahmebedingungen bekommst du mit dem Anmeldeformular.</p>
+        </details>
+        <details>
+          <summary>Was ist, wenn wir uns die Gebühr nicht leisten können?</summary>
+          <p>Dann sprich uns an. Über den Verein und Förderprogramme finden wir oft eine Lösung — vertraulich und ohne großes Verfahren.</p>
+        </details>
+      </div>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .page-head { margin-bottom: 3rem; }
+  .page-title { font-size: var(--step-4); margin-block: 0.4rem 1rem; }
+  .page-lead { font-size: var(--step-1); max-width: 54ch; }
+
+  .steps { list-style: none; padding: 0; margin: 0 0 clamp(3rem, 7vw, 5rem); display: grid; gap: 1.2rem; }
+  .steps li {
+    display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 1.5rem; align-items: start;
+    padding: 1.6rem; background: var(--ink-2); border: 1px solid var(--line); border-radius: var(--radius);
+  }
+  .steps__n {
+    display: grid; place-items: center; width: 3rem; height: 3rem; border-radius: 50%;
+    background: var(--hot); color: #fff; font-size: 1.6rem; padding-top: 0.1em;
+  }
+  .steps__h { font-size: var(--step-1); margin-bottom: 0.5rem; }
+  .steps a { color: var(--hot); }
+
+  .faq { margin-bottom: 5rem; }
+  .faq__h { font-size: var(--step-2); margin-bottom: 1.5rem; }
+  .faq__list { display: grid; gap: 0.5rem; max-width: 70ch; }
+  details { border: 1px solid var(--line); border-radius: 10px; background: var(--ink-2); }
+  summary { padding: 1rem 1.2rem; cursor: pointer; font-weight: 600; list-style: none; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: '+'; float: right; color: var(--hot); font-weight: 700; }
+  details[open] summary::after { content: '−'; }
+  details p { padding: 0 1.2rem 1.2rem; font-size: var(--step--1); color: var(--fg-muted); }
+  details a { color: var(--hot); }
+</style>

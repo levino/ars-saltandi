@@ -1,0 +1,99 @@
+---
+import Base from '../layouts/Base.astro'
+import { site, locations } from '../data/site'
+---
+<Base title="Datenschutz" description="Datenschutzerklärung der ARS SALTANDI e.V., Hildesheim.">
+  <div class="wrap-narrow">
+    <header class="page-head">
+      <h1 class="display page-title">Datenschutzerklärung</h1>
+      <p class="text-muted lead">
+        Diese Website kommt ohne Tracking, ohne Werbenetzwerke und ohne Cookie-Banner aus —
+        weil wir schlicht nichts setzen, wofür man eine Einwilligung bräuchte.
+      </p>
+    </header>
+
+    <div class="prose">
+      <div class="todo">
+        <strong>Vor dem Livegang juristisch prüfen lassen.</strong>
+        Der Text beschreibt die tatsächliche technische Umsetzung dieser Website, ersetzt aber
+        keine Rechtsberatung.
+      </div>
+
+      <h2>Verantwortlich</h2>
+      <p>
+        ARS SALTANDI e.V.<br />
+        {locations[0].street}, {locations[0].city}<br />
+        <a href={`mailto:${site.email}`}>{site.email}</a> · <a href={`tel:${site.phone}`}>{site.phoneDisplay}</a>
+      </p>
+
+      <h2>Hosting</h2>
+      <p>
+        Die Website wird bei Cloudflare gehostet. Beim Abruf verarbeitet Cloudflare technisch
+        notwendige Verbindungsdaten (IP-Adresse, Zeitpunkt, aufgerufene Adresse, Browsertyp),
+        um die Seite ausliefern und Angriffe abwehren zu können. Rechtsgrundlage ist Art. 6
+        Abs. 1 lit. f DSGVO.
+      </p>
+
+      <h2>Cookies und Tracking</h2>
+      <p>
+        Wir setzen <strong>keine</strong> Cookies, kein Analyse-Werkzeug und keine Werbe- oder
+        Social-Media-Pixel. Es gibt daher auch kein Einwilligungsbanner.
+      </p>
+
+      <h2>Schriftarten</h2>
+      <p>
+        Für Überschriften laden wir eine Schriftart von Google Fonts. Dabei wird Ihre IP-Adresse
+        an Google übertragen. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO.
+        <em>(Hinweis für die Umsetzung: Die Schrift lässt sich selbst hosten, dann entfällt
+        diese Übermittlung vollständig.)</em>
+      </p>
+
+      <h2>Formulare</h2>
+      <p>
+        Wenn Sie ein Formular abschicken (Probestunde, Kontakt, Bewerbung), werden die von
+        Ihnen eingegebenen Daten per E-Mail an uns übermittelt. Für den Versand nutzen wir den
+        Dienst Brevo (Sendinblue GmbH). Die Daten werden ausschließlich zur Bearbeitung Ihrer
+        Anfrage verwendet und nicht für Werbung genutzt. Rechtsgrundlage ist Art. 6 Abs. 1
+        lit. b bzw. lit. f DSGVO.
+      </p>
+      <p>
+        Es wird keine Datenbank betrieben — die Angaben landen in unserem E-Mail-Postfach und
+        werden dort gelöscht, sobald die Anfrage erledigt ist.
+      </p>
+
+      <h2>Newsletter</h2>
+      <p>
+        Der Newsletter läuft über Brevo. Die Anmeldung erfolgt im Double-Opt-in-Verfahren; Sie
+        können sich jederzeit über den Link in jeder E-Mail wieder abmelden.
+      </p>
+
+      <h2>Externe Links</h2>
+      <p>
+        Von dieser Website führen Links zu Instagram, betterplace.org und unserem Shop. Sobald
+        Sie diese aufrufen, gelten die Datenschutzbestimmungen der jeweiligen Anbieter. Eingebettet
+        wird nichts davon — es werden also erst Daten übertragen, wenn Sie aktiv klicken.
+      </p>
+
+      <h2>Ihre Rechte</h2>
+      <p>
+        Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung,
+        Datenübertragbarkeit und Widerspruch. Wenden Sie sich dafür einfach an
+        <a href={`mailto:${site.email}`}>{site.email}</a>. Außerdem steht Ihnen ein
+        Beschwerderecht bei einer Aufsichtsbehörde zu.
+      </p>
+    </div>
+  </div>
+</Base>
+<style>
+  .page-head { margin-bottom: 2.5rem; }
+  .page-title { font-size: var(--step-3); }
+  .lead { font-size: var(--step-0); margin-top: 1rem; max-width: 60ch; }
+  .prose { color: var(--fg-muted); margin-bottom: 5rem; }
+  .prose h2 { color: var(--fg); font-size: var(--step-1); }
+  .prose strong { color: var(--fg); }
+  .todo {
+    padding: 1.1rem 1.3rem; border: 1px dashed var(--amber); border-radius: 10px;
+    color: var(--amber); font-size: var(--step--1);
+  }
+  .todo strong { display: block; margin-bottom: 0.3rem; color: var(--amber); }
+</style>

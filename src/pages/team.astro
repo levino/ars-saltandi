@@ -1,0 +1,79 @@
+---
+import Base from '../layouts/Base.astro'
+import { getCollection, render } from 'astro:content'
+import { getSlots, slotsForTeacher } from '../lib/schedule'
+
+const teachers = (await getCollection('teachers', (t) => !t.data.draft)).sort(
+  (a, b) => a.data.order - b.data.order,
+)
+const slots = await getSlots()
+const rendered = await Promise.all(
+  teachers.map(async (t) => ({
+    entry: t,
+    Content: (await render(t)).Content,
+    courses: [...new Set(slotsForTeacher(slots, t.data.scheduleName).map((s) => s.title))].sort(
+      (a, b) => a.localeCompare(b, 'de'),
+    ),
+  })),
+)
+---
+
+<Base
+  title="Team"
+  description="Die Dozent:innen der ARS SALTANDI Tanz- und Artistikschule Hildesheim."
+>
+  <div class="wrap">
+    <header class="page-head">
+      <p class="eyebrow">Wer bei uns unterrichtet</p>
+      <h1 class="display page-title">Unser Team</h1>
+      <p class="page-lead text-muted">
+        {teachers.length} Dozent:innen — Tänzer:innen, Artist:innen, Wettkampftrainer:innen
+        und eine Cyr-Wheel-Weltmeisterin.
+      </p>
+    </header>
+
+    <div class="people">
+      {rendered.map(({ entry, Content, courses }) => (
+        <article class="person" id={entry.id}>
+          <div class="person__head">
+            <h2 class="display person__name">{entry.data.name}</h2>
+            <p class="person__role">{entry.data.role}</p>
+          </div>
+          <div class="person__body">
+            <div class="prose"><Content /></div>
+            {courses.length > 0 && (
+              <p class="person__courses">
+                <span class="person__label">Unterrichtet</span>
+                {courses.join(' · ')}
+              </p>
+            )}
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</Base>
+
+<style>
+  .page-head { margin-bottom: 3rem; }
+  .page-title { font-size: var(--step-4); margin-block: 0.4rem 1rem; }
+  .page-lead { font-size: var(--step-1); max-width: 56ch; }
+
+  .people { display: grid; gap: 0; margin-bottom: 5rem; }
+  .person {
+    display: grid; gap: 1rem 3rem; align-items: start;
+    padding-block: clamp(1.8rem, 4vw, 2.8rem); border-top: 1px solid var(--line);
+    scroll-margin-top: 6rem;
+  }
+  @media (min-width: 820px) { .person { grid-template-columns: 16rem minmax(0, 1fr); } }
+  .person:target { background: color-mix(in oklab, var(--hot) 8%, transparent); }
+
+  .person__name { font-size: var(--step-2); }
+  .person__role { font-size: var(--step--1); color: var(--hot); font-weight: 700; margin-top: 0.3rem; }
+  .person__body .prose { font-size: var(--step--1); color: var(--fg-muted); }
+  .person__courses { margin-top: 1.2rem; font-size: var(--step--1); }
+  .person__label {
+    display: block; font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--fg-muted); font-weight: 700; margin-bottom: 0.35rem;
+  }
+</style>

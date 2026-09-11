@@ -1,0 +1,97 @@
+---
+import Base from '../layouts/Base.astro'
+import Form from '../components/Form.astro'
+---
+<Base
+  title="FSJ Kultur"
+  description="Freiwilliges Soziales Jahr Kultur bei ARS SALTANDI in Hildesheim — ein Jahr zwischen Studio, Bühne und Büro."
+>
+  <div class="wrap">
+    <header class="page-head">
+      <p class="eyebrow">Ein Jahr bei uns</p>
+      <h1 class="display page-title">FSJ Kultur</h1>
+      <p class="page-lead text-muted">
+        Zwölf Monate zwischen Studio, Bühne und Büro — mit eigenem Projekt und echter
+        Verantwortung.
+      </p>
+    </header>
+
+    <div class="layout">
+      <div class="prose">
+        <p>
+          Beim FSJ Kultur arbeitest du ein Jahr lang bei uns mit: Du begleitest Kurse, hilfst
+          bei Auftritten und Veranstaltungen, bist bei Proben dabei und lernst nebenbei, wie
+          eine Kulturinstitution eigentlich funktioniert.
+        </p>
+
+        <h2>Was du machst</h2>
+        <ul>
+          <li>Unterstützung der Dozent:innen im Kursbetrieb</li>
+          <li>Mitarbeit bei Auftritten, Festivals und Wettbewerben</li>
+          <li>Organisation, Kommunikation und Social Media</li>
+          <li>Ein eigenes Projekt, das du selbst entwickelst und umsetzt</li>
+        </ul>
+
+        <h2>Was du mitbringst</h2>
+        <p>
+          Interesse an Tanz, Artistik oder Kulturarbeit — tanzen können musst du nicht.
+          Wichtiger sind Zuverlässigkeit, Lust auf Arbeit mit Kindern und die Bereitschaft,
+          auch mal an einem Samstag auf einem Festivalgelände zu stehen.
+        </p>
+
+        <h2>Rahmen</h2>
+        <p>
+          Das FSJ Kultur läuft über die Landesvereinigung Kulturelle Jugendbildung. Du bekommst
+          ein Taschengeld, bist sozialversichert und nimmst an Seminarwochen mit anderen
+          Freiwilligen teil. Start ist in der Regel im September.
+        </p>
+      </div>
+
+      <aside class="side">
+        <div class="panel">
+          <h2 class="panel__h">Interesse?</h2>
+          <p class="text-muted">
+            Schreib uns kurz, warum du zu uns willst. Ein formeller Lebenslauf kann später kommen.
+          </p>
+        </div>
+      </aside>
+    </div>
+
+    <section class="apply">
+      <h2 class="display apply__h">Bewirb dich</h2>
+      <Form name="FSJ Kultur" subject="Bewerbung FSJ Kultur" submitLabel="Bewerbung senden">
+        <div class="row">
+          <p class="field">
+            <label class="field__label" for="name">Name</label>
+            <input id="name" name="Name" type="text" required autocomplete="name" placeholder=" " />
+          </p>
+          <p class="field">
+            <label class="field__label" for="email">E-Mail</label>
+            <input id="email" name="E-Mail" type="email" required autocomplete="email" placeholder=" " />
+          </p>
+        </div>
+        <p class="field">
+          <label class="field__label" for="jahr">Gewünschter Start</label>
+          <input id="jahr" name="Gewünschter Start" type="text" placeholder="z. B. September 2027" />
+        </p>
+        <p class="field">
+          <label class="field__label" for="motivation">Warum du?</label>
+          <textarea id="motivation" name="Motivation" required placeholder="Erzähl uns kurz von dir."></textarea>
+        </p>
+      </Form>
+    </section>
+  </div>
+</Base>
+<style>
+  .page-head { margin-bottom: 3rem; }
+  .page-title { font-size: var(--step-4); margin-block: 0.4rem 1rem; }
+  .page-lead { font-size: var(--step-1); max-width: 54ch; }
+  .layout { display: grid; gap: clamp(2rem, 5vw, 4rem); align-items: start; }
+  @media (min-width: 900px) { .layout { grid-template-columns: minmax(0, 1fr) 300px; } }
+  .prose { color: var(--fg-muted); }
+  .panel { padding: 1.5rem; background: var(--ink-2); border: 1px solid var(--line); border-radius: var(--radius); }
+  .panel__h { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--hot); margin-bottom: 1rem; }
+  .panel p { font-size: var(--step--1); }
+  .apply { margin-block: clamp(3rem, 7vw, 5rem) 5rem; padding-top: 2.5rem; border-top: 1px solid var(--line); max-width: 46rem; }
+  .apply__h { font-size: var(--step-2); margin-bottom: 1.5rem; }
+</style>

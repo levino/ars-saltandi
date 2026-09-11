@@ -1,0 +1,83 @@
+---
+import Base from '../layouts/Base.astro'
+import Form from '../components/Form.astro'
+import { site, locations } from '../data/site'
+---
+
+<Base
+  title="Kontakt"
+  description="Kontakt zur ARS SALTANDI Tanz- und Artistikschule Hildesheim — Telefon, E-Mail und beide Standorte."
+>
+  <div class="wrap">
+    <header class="page-head">
+      <p class="eyebrow">Schreib uns</p>
+      <h1 class="display page-title">Kontakt</h1>
+      <p class="page-lead text-muted">
+        Fragen zu einem Kurs, zur Anmeldung oder zu einer Zusammenarbeit? Wir antworten
+        so schnell wir können.
+      </p>
+    </header>
+
+    <div class="layout">
+      <Form name="Kontakt" subject="Kontaktanfrage über die Website" submitLabel="Nachricht senden">
+        <div class="row">
+          <p class="field">
+            <label class="field__label" for="name">Name</label>
+            <input id="name" name="Name" type="text" required autocomplete="name" placeholder=" " />
+          </p>
+          <p class="field">
+            <label class="field__label" for="email">E-Mail</label>
+            <input id="email" name="E-Mail" type="email" required autocomplete="email" placeholder=" " />
+          </p>
+        </div>
+        <p class="field">
+          <label class="field__label" for="betreff">Betreff</label>
+          <input id="betreff" name="Betreff" type="text" required placeholder=" " />
+        </p>
+        <p class="field">
+          <label class="field__label" for="nachricht">Nachricht</label>
+          <textarea id="nachricht" name="Nachricht" required placeholder="Worum geht es?"></textarea>
+        </p>
+      </Form>
+
+      <aside class="side">
+        <div class="panel">
+          <h2 class="panel__h">Direkt</h2>
+          <p><a class="big-link" href={`tel:${site.phone}`}>{site.phoneDisplay}</a></p>
+          <p class="text-muted">Wochentags erreichbar.</p>
+          <p style="margin-top: 1rem;"><a class="big-link" href={`mailto:${site.email}`}>{site.email}</a></p>
+        </div>
+
+        {locations.map((l) => (
+          <div class="panel">
+            <h2 class="panel__h">{l.name}</h2>
+            <p>{l.street}<br />{l.city}</p>
+            <p class="text-muted" style="margin-top: .6rem;">{l.blurb}</p>
+          </div>
+        ))}
+
+        <div class="panel">
+          <h2 class="panel__h">Folgen</h2>
+          <p><a href={site.instagram} rel="me noopener">Instagram</a></p>
+          <p><a href={site.betterplace} rel="noopener">Spenden über betterplace</a></p>
+          <p><a href={site.shop} rel="noopener">Shop</a></p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .page-head { margin-bottom: 3rem; }
+  .page-title { font-size: var(--step-4); margin-block: 0.4rem 1rem; }
+  .page-lead { font-size: var(--step-1); max-width: 54ch; }
+  .layout { display: grid; gap: clamp(2rem, 5vw, 4rem); align-items: start; margin-bottom: 5rem; }
+  @media (min-width: 900px) { .layout { grid-template-columns: minmax(0, 1fr) 320px; } }
+  .side { display: grid; gap: 1.2rem; }
+  .panel { padding: 1.5rem; background: var(--ink-2); border: 1px solid var(--line); border-radius: var(--radius); }
+  .panel__h { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--hot); margin-bottom: 1rem; }
+  .panel p { font-size: var(--step--1); }
+  .panel a:not(.big-link) { color: var(--hot); }
+  .big-link { font-size: var(--step-1); font-weight: 700; text-decoration: none; }
+  .big-link:hover { color: var(--hot); }
+</style>
