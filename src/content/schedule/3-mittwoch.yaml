@@ -49,17 +49,6 @@ slots:
     end: "17:00"
     title: Inklusive Tanzgruppe
   - studio: 3
-    start: "17:15"
-    end: "18:15"
-    title: HipHop
-    teacher: Pia
-    levels: [1]
-  - studio: 3
-    start: "18:15"
-    end: "19:15"
-    title: HipHop Masterclass
-    teacher: Pia
-  - studio: 3
     start: "19:15"
     end: "20:15"
     title: Dancehall (ab 16)

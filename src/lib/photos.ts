@@ -27,7 +27,7 @@ export const coursePhotos: Record<string, string> = {
   'ars-saltandi': 'studio-training',
   ballett: 'ballett',
   contemporary: 'contemporary',
-  hiphop: 'buehne-uebermut',
+  dancehall: 'buehne-uebermut',
   tanzakrobatik: 'tanzakrobatik',
   stepptanz: 'stepptanz',
   'kreativer-tanz': 'studio-kinder',

@@ -2,7 +2,7 @@ export const site = {
   name: 'ARS SALTANDI',
   tagline: 'Tanz. Artistik. Bühne.',
   description:
-    'Tanz- und Artistikschule in Hildesheim: Ballett, HipHop, Contemporary, Tanzakrobatik, Vertikaltuch, Rhönrad, Cyr Wheel und mehr — für Kinder ab 3,5 Jahren bis Erwachsene.',
+    'Tanz- und Artistikschule in Hildesheim: Ballett, Contemporary, Tanzakrobatik, Vertikaltuch, Rhönrad, Cyr Wheel und mehr — für Kinder ab 3,5 Jahren bis Erwachsene.',
   email: 'info@arssaltandi.de',
   phone: '+49 5121 2065646',
   phoneDisplay: '05121 – 206 56 46',
@@ -18,7 +18,7 @@ export const locations = [
     name: 'Dance & Drama School',
     street: 'Carl-Zeiss-Straße 26',
     city: '31137 Hildesheim',
-    blurb: 'Ballett, Jazz, Contemporary, HipHop, Stepptanz, Bauchtanz und die ARS-SALTANDI-Gruppen.',
+    blurb: 'Ballett, Jazz, Contemporary, Dancehall, Stepptanz, Bauchtanz und die ARS-SALTANDI-Gruppen.',
   },
   {
     id: 'moving-arts',

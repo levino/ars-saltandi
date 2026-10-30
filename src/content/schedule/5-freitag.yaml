@@ -57,16 +57,6 @@ slots:
     end: "16:00"
     title: ARS SALTANDI (7-9)
     teacher: Pia
-  - studio: 3
-    start: "16:00"
-    end: "17:00"
-    title: HipHop (12-15)
-    teacher: Pia
-  - studio: 3
-    start: "17:00"
-    end: "18:00"
-    title: HipHop (ab 16)
-    teacher: Pia
   - studio: 4
     start: "14:30"
     end: "15:30"

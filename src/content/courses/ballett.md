@@ -14,7 +14,7 @@ order: 2
 ---
 
 Ballett ist bei uns kein Selbstzweck und kein Drill. Es ist die Technik, von der
-jeder andere Tanzstil profitiert: Wer sauber Ballett tanzt, steht auch im HipHop
+jeder andere Tanzstil profitiert: Wer sauber Ballett tanzt, steht auch in der Tanzakrobatik
 stabiler und hängt am Vertikaltuch kontrollierter.
 
 Wir unterrichten an der Stange und im Raum, mit klarer Technik und ohne

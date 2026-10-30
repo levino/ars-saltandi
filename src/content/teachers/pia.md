@@ -1,10 +1,9 @@
 ---
 name: Pia-Doreen Brandt
 scheduleName: Pia
-role: Tanzpädagogin · HipHop
+role: Tanzpädagogin · Contemporary Jazz
 order: 12
 ---
 
-Pia bringt HipHop, Contemporary Jazz und Tanzakrobatik ins Haus — von der
-Masterclass bis zu den ARS-SALTANDI-Gruppen. Ihre HipHop-Kurse gehören zu den
-am stärksten nachgefragten der Schule.
+Pia bringt Contemporary Jazz und Tanzakrobatik ins Haus und leitet mehrere
+ARS-SALTANDI-Gruppen.
