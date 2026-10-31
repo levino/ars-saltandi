@@ -58,11 +58,11 @@ const isActive = (href: string) => path === href || (href !== '/' && path.starts
 </header>
 
 <style>
-  /* Der Kopf trägt den Blauverlauf der bisherigen Website. */
+  /* Der Kopf ist einfarbig schwarz, ohne Verlauf. */
   .hdr {
     position: sticky; top: 0; z-index: 50;
     background-color: #000;
-    background-image: linear-gradient(var(--blue) 0%, #000 61%);
+    background-image: none;
     border-bottom: 1px solid color-mix(in oklab, #fff 18%, transparent);
   }
   .hdr__inner { display: flex; align-items: center; gap: 1rem; padding-block: 0.8rem; }
